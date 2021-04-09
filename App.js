@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as FileSystem from 'expo-file-system';
 import { Text, View, StyleSheet, Button, StatusBar } from 'react-native';
 import { Audio } from 'expo-av';
 
@@ -30,8 +31,21 @@ export default function App() {
     console.log('Stopping recording..');
     setRecording(undefined);
     await recording.stopAndUnloadAsync();
+    console.log(recording);
     const uri = recording.getURI();
     console.log('Recording stopped and stored at', uri);
+
+    FileSystem.getInfoAsync(uri)
+      .then((result) => {
+        console.log(`getInfoAsync 결과 ${JSON.stringify(result)}`);
+      })
+      .catch((error) => console.log(error));
+
+    FileSystem.getContentUriAsync(uri)
+      .then((result) => {
+        console.log(`content uri success ${result}`);
+      })
+      .catch((error) => console.log(error));
   }
 
   return (
