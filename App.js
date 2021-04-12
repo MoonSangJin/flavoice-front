@@ -31,19 +31,13 @@ export default function App() {
     console.log('Stopping recording..');
     setRecording(undefined);
     await recording.stopAndUnloadAsync();
-    console.log(recording);
     const uri = recording.getURI();
     console.log('Recording stopped and stored at', uri);
-
-    FileSystem.getInfoAsync(uri)
-      .then((result) => {
-        console.log(`getInfoAsync 결과 ${JSON.stringify(result)}`);
-      })
-      .catch((error) => console.log(error));
 
     FileSystem.getContentUriAsync(uri)
       .then((result) => {
         console.log(`content uri success ${result}`);
+        let example = result;
       })
       .catch((error) => console.log(error));
   }
