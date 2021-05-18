@@ -50,7 +50,10 @@ export default function Recording() {
         title={'New recording'}
         showUIAudio
         audioURL={audioDetails.url}
-        {...{ handleAudioStop, handleAudioUpload, handleReset }}
+        handleAudioStop={handleAudioStop}
+        handleAudioUpload={handleAudioUpload}
+        handleReset={handleReset}
+        mimeTypeToUseWhenRecording={`audio/webm`}
       />
     </div>
   );
