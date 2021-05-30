@@ -1,5 +1,5 @@
 import { useReactMediaRecorder } from 'react-media-recorder';
-
+import Home from './Routes/Home';
 const RecordView = () => {
   const { status, startRecording, stopRecording, mediaBlobUrl } =
     useReactMediaRecorder({ audio: true });
@@ -17,6 +17,7 @@ const RecordView = () => {
       <button onClick={stopRecording}>Stop Recording</button>
       <button onClick={showType}>audio 확인하기</button>
       <audio src={mediaBlobUrl} controls autoPlay loop />
+      <Home />
     </div>
   );
 };
