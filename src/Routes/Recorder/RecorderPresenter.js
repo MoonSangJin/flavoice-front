@@ -1,6 +1,7 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 import { useReactMediaRecorder } from 'react-media-recorder';
+import BackButton from '../../Components/BackButton';
 
 const RecorderPresenter = () => {
   const { status, startRecording, stopRecording, mediaBlobUrl } =
@@ -8,6 +9,9 @@ const RecorderPresenter = () => {
 
   return (
     <div>
+      <Link to="/">
+        <BackButton />
+      </Link>
       <p>{status}</p>
       <button onClick={startRecording}>Start Recording</button>
       <button onClick={stopRecording}>Stop Recording</button>
