@@ -1,10 +1,13 @@
 import React from 'react';
 import Router from './components/Router';
+import Template from './lib/styles/Template';
 
 const App = () => {
   return (
     <>
-      <Router />
+      <Template>
+        <Router />
+      </Template>
     </>
   );
 };
