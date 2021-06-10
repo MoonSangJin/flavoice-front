@@ -15,6 +15,7 @@ const HomePresenter = () => {
         <Link to="/signin">SignIn</Link>
         <Link to="/signup">SignUp</Link>
         <Link to="/recorder">Recorder</Link>
+        <Link to="/displayComponents">DisplayComponents</Link>
       </Wrap>
     </>
   );
