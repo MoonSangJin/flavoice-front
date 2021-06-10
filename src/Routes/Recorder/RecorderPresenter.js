@@ -5,7 +5,13 @@ import BackButton from '../../components/BackButton';
 
 const RecorderPresenter = () => {
   const { status, startRecording, stopRecording, mediaBlobUrl } =
-    useReactMediaRecorder({ video: true });
+    useReactMediaRecorder({ audio: true });
+
+  const showType = async () => {
+    console.log(mediaBlobUrl);
+    let blob = await fetch(mediaBlobUrl).then((r) => r.blob());
+    console.log(blob);
+  };
 
   return (
     <div>
@@ -13,9 +19,10 @@ const RecorderPresenter = () => {
         <BackButton />
       </Link>
       <p>{status}</p>
+      <button onClick={showType}>type확인버튼</button>
       <button onClick={startRecording}>Start Recording</button>
       <button onClick={stopRecording}>Stop Recording</button>
-      <video src={mediaBlobUrl} controls autoPlay loop />
+      <audio src={mediaBlobUrl} controls autoPlay loop />
     </div>
   );
 };
