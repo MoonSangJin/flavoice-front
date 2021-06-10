@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import BackButton from '../../Components/BackButton';
+import BackButton from '../../components/BackButton';
 
 const HomePresenter = () => {
   return (
