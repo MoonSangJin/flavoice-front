@@ -9,12 +9,15 @@ const ValidationMessage = styled.div`
 
 const InputContainer = styled.input`
   all: unset;
-  width: 100%;
+  width: 95%;
   height: 45px;
   background: #f5f7f8;
-  border: 1.4px solid ${({ isValid }) => (isValid ? '#F5F7F8' : '#FF4545')};
-  border-radius: 50px;
+  border: 2px solid ${({ isValid }) => (isValid ? '#F5F7F8' : '#FF4545')};
+  border-radius: 15px;
   text-indent: 23px;
+
+  margin-left: 10px;
+  margin-right: 10px;
 
   ::placeholder {
     font-style: normal;
@@ -26,7 +29,7 @@ const InputContainer = styled.input`
   }
 
   :focus {
-    border: 1.4px solid #7785ff;
+    border: 2px solid #7785ff;
   }
 `;
 
