@@ -68,11 +68,9 @@ const RecorderPresenter = ({
         <Padding />
         <audio src={mediaBlobUrl} controls />
       </Form>
-
       <Form>
         <Line />
-        <Padding height={16} />
-
+        <Padding height={32} />
         <AudioBlock>
           <Text fontWeight={400} fontSize={16}>
             녹음파일 업로드
@@ -90,7 +88,7 @@ const RecorderPresenter = ({
             {i === 0 ? null : (
               <ImBlock>
                 <audio src={audioUrl.fileUrl} controls />
-                <CloseBox onClick={() => onRemove(audioUrl.id)}>삭제</CloseBox>
+                <button onClick={() => onRemove(audioUrl.id)}>삭제</button>
               </ImBlock>
             )}
           </div>

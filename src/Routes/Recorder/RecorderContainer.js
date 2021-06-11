@@ -30,15 +30,13 @@ const RecorderContainer = () => {
       let reader = new FileReader();
       reader.onload = () => {
         fileUrls[i] = reader.result;
-        const image = {
+        const audio = {
           id: nextId.current,
           fileUrl: fileUrls[i],
         };
-
-        console.log('for in image i nextId.current ', image, i, nextId.current);
-
-        setAudioUrls(audioUrls.concat(image));
+        setAudioUrls(audioUrls.concat(audio));
         nextId.current += 1;
+        console.log(audioUrls, i);
       };
       reader.readAsDataURL(file);
     }
@@ -46,7 +44,7 @@ const RecorderContainer = () => {
 
   const onRemove = (id) => {
     console.log('onRemove', audioUrls, id);
-    setAudioUrls(audioUrls.filter((img) => img.id !== id));
+    setAudioUrls(audioUrls.filter((audio) => audio.id !== id));
   };
 
   return (
