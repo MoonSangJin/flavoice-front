@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import BackButton from '../../components/BackButton';
+import BackButton from '../../Components/BackButton';
 
 const SignUpPresenter = () => {
   return (
