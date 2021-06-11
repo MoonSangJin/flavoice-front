@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import SignInPresenter from './SignInPresenter';
 
 const SignInContainer = () => {
-  const [name, setName] = useState('');
-  const [age, setAge] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailValidationMessage, setEmailValidationMessage] = useState('');
@@ -15,12 +13,6 @@ const SignInContainer = () => {
   };
   const passwordChangeHandler = (e) => {
     setPassword(e.target.value);
-  };
-  const nameChangeHandler = (e) => {
-    setName(e.target.value);
-  };
-  const ageChangeHandler = (e) => {
-    setAge(e.target.value);
   };
 
   const isValidEmail = () => {
@@ -57,9 +49,7 @@ const SignInContainer = () => {
   const handleSignIn = () => {
     const isValid = checkValidation();
     if (isValid) {
-      alert('가입완료');
-      setName('');
-      setAge('');
+      alert('로그인');
       setEmail('');
       setPassword('');
     }
