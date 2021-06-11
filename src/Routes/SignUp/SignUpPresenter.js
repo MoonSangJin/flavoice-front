@@ -1,16 +1,92 @@
 import React from 'react';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import BackButton from '../../Components/BackButton';
-
-const SignUpPresenter = () => {
+import Input from '../../Components/Input';
+import Logo from '../../../src/logo.png';
+import Text from '../../Components/Text';
+const SignUpPresenter = ({
+  email,
+  password,
+  emailValidationMessage,
+  setEmailValidationMessage,
+  passwordValidationMessage,
+  setPasswordValidationMessage,
+  handleSignUp,
+  emailChangeHandler,
+  passwordChangeHandler,
+  isValidEmail,
+  isValidPassword,
+  handleOnKeyUp,
+  name,
+  nameChangeHandler,
+  age,
+  ageChangeHandler,
+}) => {
   return (
-    <div>
-      SignUpPresenter
+    <>
       <Link to="/">
         <BackButton />
       </Link>
-    </div>
+      <LogoRow>
+        <img src={Logo} alt={'logo'} />
+      </LogoRow>
+      <AuthContainer>
+        <Input
+          value={name}
+          placeholder={'이름'}
+          onChange={nameChangeHandler}
+          validationMessage={''}
+        />
+        <Input
+          value={age}
+          placeholder={'나이'}
+          onChange={ageChangeHandler}
+          validationMessage={''}
+        />
+        <Input
+          value={email}
+          placeholder={'Email'}
+          validationMessage={emailValidationMessage}
+          onChange={emailChangeHandler}
+          onFocus={() => setEmailValidationMessage('')}
+          onBlur={isValidEmail}
+          onKeyUp={handleOnKeyUp}
+        />
+        <Input
+          value={password}
+          placeholder={'Password'}
+          validationMessage={passwordValidationMessage}
+          onChange={passwordChangeHandler}
+          onFocus={() => setPasswordValidationMessage('')}
+          onBlur={isValidPassword}
+          onKeyUp={handleOnKeyUp}
+          type={'password'}
+        />
+        <CompleteButton onClick={() => handleSignUp}>
+          <Text hover textAlign={'center'} white>
+            가입완료
+          </Text>
+        </CompleteButton>
+      </AuthContainer>
+    </>
   );
 };
+const AuthContainer = styled.div``;
+const LogoRow = styled.div`
+  width: 100%;
+  text-align: center;
+  margin-top: 10%;
+`;
+const CompleteButton = styled.div`
+  width: 150px;
+  height: 33px;
+  background: #4b93d3;
+  border-radius: 13px;
+  margin: 0 auto;
+  text-align: center;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  margin-top: 10px;
+`;
 
 export default SignUpPresenter;
