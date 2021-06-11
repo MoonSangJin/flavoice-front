@@ -1,27 +1,24 @@
 import React from 'react';
-import { View, TouchableWithoutFeedback } from 'react-native';
-import styled from 'styled-components/native';
-import { Text } from './defaults';
+import styled, { css } from 'styled-components';
 
-const Container = styled(View)`
+const Container = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
 `;
-const Check = styled(View)`
+const Check = styled.div`
   width: ${({ fontSize }) => fontSize}px;
   height: ${({ fontSize }) => fontSize}px;
   border: 1px solid black;
   margin-right: 10px;
   ${({ selected }) => selected && `background: black;`}
 `;
-export default ({ title, value, onChange, fontSize = 20 }) => {
+export default ({ value, onClick, fontSize = 20 }) => {
   return (
-    <TouchableWithoutFeedback onPress={() => onChange(!value)}>
-      <Container>
+    <>
+      <Container onClick={onClick}>
         <Check selected={value} fontSize={fontSize} />
-        <Text style={{fontSize, color: 'gray' }}>{title}</Text>
       </Container>
-    </TouchableWithoutFeedback>
+    </>
   );
 };
