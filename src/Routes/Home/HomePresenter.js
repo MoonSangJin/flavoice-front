@@ -10,35 +10,28 @@ const HomePresenter = () => {
   return (
     <>
       <Text>FLAVOICE</Text>
-      <Wrap>
-        <Form>
-          <Link to="/">
-            <BackButton />
-          </Link>
-          <Link to="/">
-            <Text>Home</Text>
-          </Link>
-          <Link to="/signin">
-            <Text hover>SignIn</Text>
-          </Link>
-          <Link to="/signup">
-            <Text hover>SignUp</Text>
-          </Link>
-          <Link to="/recorder">
-            <Text hover>Recorder</Text>
-          </Link>
-          <Link to="/displayComponents">
-            <Text hover>DisplayComponents</Text>
-          </Link>
-        </Form>
-      </Wrap>
+      <Form style={{ display: 'flex', alignItems: 'center' }}>
+        <Link to="/">
+          <BackButton />
+        </Link>
+        <Link to="/">
+          <Button content={'Home'} />
+        </Link>
+        <Link to="/signin">
+          <Button content={'Sign In'} />
+        </Link>
+        <Link to="/signup">
+          <Button content={'Sign Up'} />
+        </Link>
+        <Link to="/recorder">
+          <Button content={'Recorder'} />
+        </Link>
+        <Link to="/displayComponents">
+          <Button content={'Display Components'} />
+        </Link>
+      </Form>
     </>
   );
 };
-
-const Wrap = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
 
 export default HomePresenter;
