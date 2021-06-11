@@ -22,7 +22,7 @@ const RecorderPresenter = () => {
       <button onClick={showType}>type확인버튼</button>
       <button onClick={startRecording}>Start Recording</button>
       <button onClick={stopRecording}>Stop Recording</button>
-      <audio src={mediaBlobUrl} controls loop />
+      <audio src={mediaBlobUrl} />
     </div>
   );
 };
