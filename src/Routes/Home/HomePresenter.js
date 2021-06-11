@@ -24,7 +24,7 @@ const HomePresenter = () => {
             <Text>SignUp</Text>
           </Link>
           <Link to="/recorder">
-            R<Text>ecorder</Text>
+            <Text>Recorder</Text>
           </Link>
           <Link to="/displayComponents">
             <Text>DisplayComponents</Text>
