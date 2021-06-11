@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import BackButton from '../../Components/BackButton';
 import Form from '../../Components/Form';
 import Text from '../../Components/Text';
+import Button from '../../Components/Button';
 
 const HomePresenter = () => {
   return (
@@ -18,16 +19,16 @@ const HomePresenter = () => {
             <Text>Home</Text>
           </Link>
           <Link to="/signin">
-            <Text>SignIn</Text>
+            <Text hover>SignIn</Text>
           </Link>
           <Link to="/signup">
-            <Text>SignUp</Text>
+            <Text hover>SignUp</Text>
           </Link>
           <Link to="/recorder">
-            <Text>Recorder</Text>
+            <Text hover>Recorder</Text>
           </Link>
           <Link to="/displayComponents">
-            <Text>DisplayComponents</Text>
+            <Text hover>DisplayComponents</Text>
           </Link>
         </Form>
       </Wrap>

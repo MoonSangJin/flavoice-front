@@ -19,7 +19,7 @@ const StyledText = styled.p`
   ${(props) =>
     props.fontSize &&
     css`
-      font-size: ${props.fontSize}rem;
+      font-size: ${props.fontSize}px;
     `}
 
     ${(props) =>
@@ -75,7 +75,7 @@ const StyledText = styled.p`
     css`
       margin-top: 0.3rem;
       margin-left: 1.2rem;
-      font-size: 1.6rem;
+      font-size: 1.2rem;
       font-weight: 700;
       color: ${palette.red};
     `};
@@ -87,6 +87,14 @@ const StyledText = styled.p`
       font-size: 1.6rem;
       font-weight: 400;
     `};
+
+  ${(props) =>
+    props.hover &&
+    css`
+      &:hover {
+        font-weight: 700;
+      }
+    `}
 `;
 
 const Text = ({ children, ...rest }) => {

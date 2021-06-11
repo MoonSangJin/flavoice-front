@@ -7,7 +7,7 @@ const BackButton = () => {
   return (
     <>
       <Container>
-        <Text>Back</Text>
+        <Text hover>Back</Text>
       </Container>
     </>
   );
