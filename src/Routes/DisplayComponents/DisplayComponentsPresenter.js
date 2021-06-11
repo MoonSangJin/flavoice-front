@@ -8,10 +8,11 @@ import CheckBox from '../../Components/CheckBox';
 import Input from '../../Components/Input';
 import Text from '../../Components/Text';
 import Modal from '../../Components/Modal';
+import Button from '../../Components/Button';
 
 const DisplayComponentsPresenter = () => {
   const [isChecked, setIsChecked] = useState(false);
-  const [isOpenModal, setIsOpenModal] = useState(true);
+  const [isOpenModal, setIsOpenModal] = useState(false);
   return (
     <>
       <Form>
@@ -31,6 +32,8 @@ const DisplayComponentsPresenter = () => {
         <Modal isOpen={isOpenModal} closeHandler={setIsOpenModal}>
           모달은 모달모달
         </Modal>
+
+        <Button content={'내용'} />
       </Form>
     </>
   );
