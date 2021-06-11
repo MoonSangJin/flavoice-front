@@ -30,8 +30,8 @@ const ModalWrapper = styled.div`
 export default function Modal({ isOpen, closeHandler, children }) {
   return isOpen ? (
     <>
-      <Overlay onClick={() => closeHandler(!isOpen)} />
 
+      <Overlay onClick={() => closeHandler(!isOpen)} />
       <ModalWrapper>{children}</ModalWrapper>
     </>
   ) : null;

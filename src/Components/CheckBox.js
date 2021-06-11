@@ -1,4 +1,5 @@
 import React from 'react';
+
 import styled, { css } from 'styled-components';
 
 const Container = styled.div`
@@ -6,13 +7,16 @@ const Container = styled.div`
   flex-direction: row;
   align-items: center;
 `;
+
 const Check = styled.div`
+
   width: ${({ fontSize }) => fontSize}px;
   height: ${({ fontSize }) => fontSize}px;
   border: 1px solid black;
   margin-right: 10px;
   ${({ selected }) => selected && `background: black;`}
 `;
+
 export default ({ value, onClick, fontSize = 20 }) => {
   return (
     <>
@@ -20,5 +24,6 @@ export default ({ value, onClick, fontSize = 20 }) => {
         <Check selected={value} fontSize={fontSize} />
       </Container>
     </>
+
   );
 };

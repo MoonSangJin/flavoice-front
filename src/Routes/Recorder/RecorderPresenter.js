@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useReactMediaRecorder } from 'react-media-recorder';
 import BackButton from '../../Components/BackButton';
+import Button from '../../Components/Button';
+import Text from '../../Components/Text';
+import Form from '../../Components/Form';
 
 const RecorderPresenter = () => {
   const { status, startRecording, stopRecording, mediaBlobUrl } =
@@ -12,18 +15,23 @@ const RecorderPresenter = () => {
     let blob = await fetch(mediaBlobUrl).then((r) => r.blob());
     console.log(blob);
   };
-
   return (
-    <div>
+    <Form>
       <Link to="/">
         <BackButton />
       </Link>
-      <p>{status}</p>
-      <button onClick={showType}>type확인버튼</button>
-      <button onClick={startRecording}>Start Recording</button>
-      <button onClick={stopRecording}>Stop Recording</button>
-      <audio src={mediaBlobUrl} controls loop />
-    </div>
+      <Text>{status}</Text>
+      <Button onClick={showType} hover>
+        <Text hover>type확인버튼</Text>
+      </Button>
+      <Button onClick={startRecording}>
+        <Text hover>녹화시작</Text>{' '}
+      </Button>
+      <Button onClick={stopRecording}>
+        <Text hover>녹화종료</Text>
+      </Button>
+      <audio src={mediaBlobUrl} controls />
+    </Form>
   );
 };
 
