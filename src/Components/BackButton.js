@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import palette from '../lib/styles/paletts';
 import Text from './Text';
 
+
 const BackButton = () => {
   return (
     <>
@@ -15,6 +16,8 @@ const BackButton = () => {
 
 const Container = styled.div`
   width: 100px;
+
   background-color: ${palette.orange};
+
 `;
 export default BackButton;
