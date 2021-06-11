@@ -5,6 +5,8 @@ import BackButton from '../../Components/BackButton';
 import Input from '../../Components/Input';
 import Logo from '../../../src/logo.png';
 import Text from '../../Components/Text';
+import palette from '../../lib/styles/paletts.js';
+
 const SignUpPresenter = ({
   email,
   password,
@@ -64,7 +66,7 @@ const SignUpPresenter = ({
           type={'password'}
         />
         <CompleteButton onClick={() => handleSignUp}>
-          <Text hover textAlign={'center'} white>
+          <Text hover textAlign={'center'} white style={{ paddingTop: '2px' }}>
             가입완료
           </Text>
         </CompleteButton>
@@ -81,12 +83,13 @@ const LogoRow = styled.div`
 const CompleteButton = styled.div`
   width: 150px;
   height: 33px;
-  background: #4b93d3;
+  background: ${palette.logo};
   border-radius: 13px;
   margin: 0 auto;
   text-align: center;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   margin-top: 10px;
+  text-align: center;
 `;
 
 export default SignUpPresenter;
