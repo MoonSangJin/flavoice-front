@@ -8,10 +8,17 @@ import styled from 'styled-components';
 import palette from '../../lib/styles/paletts';
 import Line from '../../Components/Line';
 import Padding from '../../Components/Padding';
+import Upload from '../../../src/cloud.png';
 
 const ImBlock = styled.div`
   position: relative;
 `;
+
+const Img = styled.img`
+  width: 160px;
+  height: 130px;
+`;
+
 const CloseBox = styled.button`
   width: 30px;
   height: 30px;
@@ -27,14 +34,8 @@ const AudioBlock = styled.label`
   justify-content: center;
   align-items: center;
 
-  width: 100px;
-  height: 100px;
   padding: 15px 11px 7px 12px;
   border-radius: 8px;
-  border: solid 1px ${palette.gray[100]};
-  background-color: ${palette.gray[50]};
-  letter-spacing: -0.7px;
-  color: #808080;
 
   cursor: pointer;
 `;
@@ -72,9 +73,7 @@ const RecorderPresenter = ({
         <Line />
         <Padding height={32} />
         <AudioBlock>
-          <Text fontWeight={400} fontSize={16}>
-            녹음파일 업로드
-          </Text>
+          <Img src={Upload} alt={'logo'} />
           <input
             style={{ display: 'none' }}
             type="file"
