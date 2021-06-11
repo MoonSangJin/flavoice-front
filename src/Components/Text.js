@@ -35,9 +35,9 @@ const StyledText = styled.p`
     `}
 
     ${(props) =>
-    props.orange &&
+    props.white &&
     css`
-      color: ${palette.orange};
+      color: ${palette.white};
     `};
 
   ${(props) =>
@@ -92,10 +92,10 @@ const StyledText = styled.p`
     props.hover &&
     css`
       &:hover {
-        font-weight: 700;
+        font-weight: 550;
+        cursor: pointer;
       }
     `}
-
 `;
 
 const Text = ({ children, ...rest }) => {
