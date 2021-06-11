@@ -6,22 +6,17 @@ const RecorderContainer = () => {
   const { status, startRecording, stopRecording, mediaBlobUrl } =
     useReactMediaRecorder({ audio: true });
 
+  const [audioUrls, setAudioUrls] = useState([{ id: '', fileUrl: '' }]);
+
   const showType = async () => {
     console.log(mediaBlobUrl);
-    let blob = await fetch(mediaBlobUrl).then((r) => r.blob());
+    let blob = await fetch(mediaBlobUrl).then((record) => record.blob());
     console.log(blob);
+    console.log(audioUrls);
   };
-
-  const [imgUrls, setImgUrls] = useState([{ id: '', fileUrl: '' }]);
-  const MAX = 3;
 
   const nextId = useRef(1);
   const onInsert = (e) => {
-    if (imgUrls.length > MAX) {
-      alert('사진은 3개 까지만 업로드 가능합니다.');
-      return;
-    }
-
     const fileArr = e.target.files;
 
     let fileUrls = [];
@@ -35,23 +30,21 @@ const RecorderContainer = () => {
       let reader = new FileReader();
       reader.onload = () => {
         fileUrls[i] = reader.result;
-        const image = {
+        const audio = {
           id: nextId.current,
           fileUrl: fileUrls[i],
         };
-
-        console.log('for in image i nextId.current ', image, i, nextId.current);
-
-        setImgUrls(imgUrls.concat(image));
+        setAudioUrls(audioUrls.concat(audio));
         nextId.current += 1;
+        console.log(audioUrls, i);
       };
       reader.readAsDataURL(file);
     }
   };
 
   const onRemove = (id) => {
-    console.log('onRemove', imgUrls, id);
-    setImgUrls(imgUrls.filter((img) => img.id !== id));
+    console.log('onRemove', audioUrls, id);
+    setAudioUrls(audioUrls.filter((audio) => audio.id !== id));
   };
 
   return (
@@ -59,7 +52,7 @@ const RecorderContainer = () => {
       <RecorderPresenter
         {...{ status }}
         {...{ showType }}
-        {...{ imgUrls }}
+        {...{ audioUrls }}
         {...{ mediaBlobUrl }}
         {...{ startRecording }}
         {...{ stopRecording }}
