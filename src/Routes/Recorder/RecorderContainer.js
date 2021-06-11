@@ -18,15 +18,12 @@ const RecorderContainer = () => {
   const nextId = useRef(1);
   const onInsert = (e) => {
     const fileArr = e.target.files;
-
     let fileUrls = [];
-
     let file;
     let filesLength = fileArr.length;
 
     for (let i = 0; i < filesLength; i++) {
       file = fileArr[i];
-
       let reader = new FileReader();
       reader.onload = () => {
         fileUrls[i] = reader.result;

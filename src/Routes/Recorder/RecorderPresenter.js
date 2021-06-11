@@ -1,10 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import BackButton from '../../Components/BackButton';
-import Button from '../../Components/Button';
 import Text from '../../Components/Text';
 import Form from '../../Components/Form';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import palette from '../../lib/styles/paletts';
 import Line from '../../Components/Line';
 import Padding from '../../Components/Padding';
@@ -15,17 +14,8 @@ const ImBlock = styled.div`
 `;
 
 const Img = styled.img`
-  width: 160px;
-  height: 130px;
-`;
-
-const CloseBox = styled.button`
-  width: 30px;
-  height: 30px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  background: ${palette.black};
+  width: 200px;
+  height: 150px;
 `;
 
 const AudioBlock = styled.label`
@@ -33,11 +23,36 @@ const AudioBlock = styled.label`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  padding: 15px 11px 7px 12px;
   border-radius: 8px;
-
   cursor: pointer;
+`;
+
+const StyledButton = styled.button`
+  color: ${palette.white};
+  background-color: ${palette.clude};
+  border: none;
+  width: 120px;
+  height: 60px;
+  border-radius: 20px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1.6rem;
+  font-weight: 500;
+  &:hover {
+    font-weight: 700;
+  }
+
+  ${(props) =>
+    props.active &&
+    css`
+      background-color: ${palette.gray[100]};
+      color: ${palette.gray[200]};
+      font-weight: 800;
+    `};
+`;
+
+const Container = styled.div`
+  display: flex;
 `;
 
 const RecorderPresenter = ({
@@ -52,23 +67,43 @@ const RecorderPresenter = ({
 }) => {
   return (
     <>
-      <Form>
-        <Link to="/">
-          <BackButton />
-        </Link>
-        <Text>{status}</Text>
-        <button onClick={showType}>
-          <Text hover>type확인버튼</Text>
-        </button>
-        <button onClick={startRecording}>
-          <Text hover>녹화시작</Text>{' '}
-        </button>
-        <button onClick={stopRecording}>
-          <Text hover>녹화종료</Text>
-        </button>
+      <Link to="/">
+        <BackButton />
+      </Link>
+      <Form style={{ alignItems: 'center' }}>
+        <Padding height={32} />
+        <StyledButton onClick={showType}>녹화한 파일보내기</StyledButton>
+        <Padding height={32} />
+        <Text>
+          {status === 'recording' ? (
+            '녹화 중'
+          ) : status === 'stopped' ? (
+            '녹화 끝'
+          ) : (
+            <Text style={{ visibility: 'hidden' }}>녹화 </Text>
+          )}
+        </Text>
+        <Padding height={32} />
+        <Container>
+          <StyledButton
+            onClick={startRecording}
+            style={{ marginRight: '10px' }}
+            active={status === 'recording'}
+          >
+            녹화 시작
+          </StyledButton>
+          <StyledButton onClick={stopRecording} active={status === 'stopped'}>
+            녹화 종료
+          </StyledButton>
+        </Container>
         <Padding />
-        <audio src={mediaBlobUrl} controls />
+        {status === 'stopped' ? (
+          <audio src={mediaBlobUrl} controls />
+        ) : (
+          <audio style={{ visibility: 'hidden' }} controls />
+        )}
       </Form>
+
       <Form>
         <Line />
         <Padding height={32} />
@@ -82,12 +117,18 @@ const RecorderPresenter = ({
             onChange={onInsert}
           />
         </AudioBlock>
+        <Padding />
         {audioUrls.map((audioUrl, i) => (
           <div key={i + 1}>
             {i === 0 ? null : (
               <ImBlock>
-                <audio src={audioUrl.fileUrl} controls />
-                <button onClick={() => onRemove(audioUrl.id)}>삭제</button>
+                <audio controls>
+                  <source src={audioUrl.fileUrl} type="audio/wav" />
+                </audio>
+                <StyledButton onClick={() => onRemove(audioUrl.id)}>
+                  삭제
+                </StyledButton>
+                <StyledButton>이 목소리 선택하기</StyledButton>
               </ImBlock>
             )}
           </div>
