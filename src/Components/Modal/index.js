@@ -21,16 +21,15 @@ const ModalWrapper = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
 
-  padding: 27px 34px;
+  padding: 40px;
   border-radius: 8px;
   background-color: white;
   z-index: 9999;
 `;
 
-export default function Modal({ isOpen, closeHandler, children }) {
+export default function Modal({ isOpen, closeHandler, children, padding = 0 }) {
   return isOpen ? (
     <>
-
       <Overlay onClick={() => closeHandler(!isOpen)} />
       <ModalWrapper>{children}</ModalWrapper>
     </>

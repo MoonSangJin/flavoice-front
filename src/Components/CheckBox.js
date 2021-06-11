@@ -6,10 +6,12 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Check = styled.div`
-
   width: ${({ fontSize }) => fontSize}px;
   height: ${({ fontSize }) => fontSize}px;
   border: 1px solid black;
@@ -24,6 +26,5 @@ export default ({ value, onClick, fontSize = 20 }) => {
         <Check selected={value} fontSize={fontSize} />
       </Container>
     </>
-
   );
 };
