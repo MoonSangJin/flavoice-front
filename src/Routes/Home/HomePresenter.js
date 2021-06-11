@@ -8,14 +8,14 @@ import Text from '../../Components/Text';
 const HomePresenter = () => {
   return (
     <>
-      HomePresenter
+      <Text>FLAVOICE</Text>
       <Wrap>
         <Form>
           <Link to="/">
             <BackButton />
           </Link>
           <Link to="/">
-            <Text> Home</Text>
+            <Text>Home</Text>
           </Link>
           <Link to="/signin">
             <Text>SignIn</Text>
