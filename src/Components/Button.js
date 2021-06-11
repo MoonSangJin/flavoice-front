@@ -6,13 +6,15 @@ const StyledButton = styled.button`
   background: #1aab8a;
   color: #fff;
   border: none;
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height}px;
   position: relative;
-  height: 60px;
   font-size: 1.6em;
   padding: 0 2em;
   cursor: pointer;
   transition: 800ms ease all;
   outline: none;
+  margin: 5px;
 
   &:hover {
     background: #fff;
@@ -42,8 +44,8 @@ const StyledButton = styled.button`
   }
 `;
 
-const Button = ({ content }) => {
-  return <StyledButton>{content}</StyledButton>;
+const Button = ({ content, width = 350, height = 80 }) => {
+  return <StyledButton {...{ width, height }}>{content}</StyledButton>;
 };
 
 export default Button;
