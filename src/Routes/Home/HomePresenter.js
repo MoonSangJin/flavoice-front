@@ -1,22 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import BackButton from '../../Components/BackButton';
 import Form from '../../Components/Form';
 import Text from '../../Components/Text';
 import Button from '../../Components/Button';
+import Logo from '../../logo.png';
 
 const HomePresenter = () => {
   return (
     <>
-      <Text>FLAVOICE</Text>
       <Form style={{ display: 'flex', alignItems: 'center' }}>
-        <Link to="/">
-          <BackButton />
-        </Link>
-        <Link to="/">
-          <Button content={'Home'} />
-        </Link>
+        <img src={Logo} style={{ marginBottom: '30px' }} />
         <Link to="/signin">
           <Button content={'Sign In'} />
         </Link>
