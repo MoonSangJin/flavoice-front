@@ -57,7 +57,11 @@ const SignUpContainer = () => {
   const handleSignUp = () => {
     const isValid = checkValidation();
     if (isValid) {
-      console.log('유효함');
+      alert('가입완료');
+      setName('');
+      setAge('');
+      setEmail('');
+      setPassword('');
     }
   };
 

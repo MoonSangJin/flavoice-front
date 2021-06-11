@@ -18,6 +18,7 @@ const palette = {
   red: '#ff3737',
   green: '#74bc20',
   green5: 'rgba(116, 188, 32, 0.05)',
+  logo: '#4b93d3',
 };
 
 export default palette;
