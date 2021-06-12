@@ -7,6 +7,8 @@ import Logo from '../../../src/logo.png';
 import Text from '../../Components/Text';
 import palette from '../../lib/styles/paletts.js';
 
+import { useHistory } from 'react-router-dom';
+
 const SignUpPresenter = ({
   email,
   password,
@@ -25,6 +27,7 @@ const SignUpPresenter = ({
   age,
   ageChangeHandler,
 }) => {
+  const history = useHistory();
   return (
     <>
       <Link to="/">
@@ -65,7 +68,7 @@ const SignUpPresenter = ({
           onKeyUp={handleOnKeyUp}
           type={'password'}
         />
-        <CompleteButton onClick={() => handleSignUp}>
+        <CompleteButton onClick={() => history.push('/signin')}>
           <Text hover textAlign={'center'} white style={{ paddingTop: '2px' }}>
             가입완료
           </Text>

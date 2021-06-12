@@ -42,14 +42,12 @@ const SignInContainer = () => {
     let isValid = true;
     isValid = isValidEmail() && isValid;
     isValid = isValidPassword() && isValid;
-
     return isValid;
   };
 
   const handleSignIn = () => {
     const isValid = checkValidation();
     if (isValid) {
-      alert('로그인');
       setEmail('');
       setPassword('');
     }

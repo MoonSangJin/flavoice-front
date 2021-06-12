@@ -124,14 +124,27 @@ const RecorderPresenter = ({
         {audioUrls.map((audioUrl, i) => (
           <div key={i + 1}>
             {i === 0 ? null : (
-              <ImBlock>
-                <audio controls>
+              <ImBlock
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}
+              >
+                <audio
+                  controls
+                  style={{ marginBottom: '10px', marginTop: '20px' }}
+                >
                   <source src={audioUrl.fileUrl} type="audio/wav" />
                 </audio>
-                <StyledButton onClick={() => onRemove(audioUrl.id)}>
-                  삭제
-                </StyledButton>
-                <StyledButton>이 목소리 선택하기</StyledButton>
+                <div>
+                  <StyledButton style={{ marginRight: '10px' }}>
+                    목소리 선택
+                  </StyledButton>
+                  <StyledButton onClick={() => onRemove(audioUrl.id)}>
+                    삭제
+                  </StyledButton>
+                </div>
               </ImBlock>
             )}
           </div>

@@ -5,6 +5,7 @@ import BackButton from '../../Components/BackButton';
 import Input from '../../Components/Input';
 import Logo from '../../../src/logo.png';
 import Text from '../../Components/Text';
+import { useHistory } from 'react-router-dom';
 
 const SignInPresenter = ({
   email,
@@ -20,6 +21,7 @@ const SignInPresenter = ({
   isValidPassword,
   handleOnKeyUp,
 }) => {
+  const history = useHistory();
   return (
     <>
       <Link to="/">
@@ -48,7 +50,7 @@ const SignInPresenter = ({
           onKeyUp={handleOnKeyUp}
           type={'password'}
         />
-        <CompleteButton onClick={() => handleSignIn()}>
+        <CompleteButton onClick={() => history.push('/recorder')}>
           <Text hover textAlign={'center'} white>
             로그인
           </Text>
