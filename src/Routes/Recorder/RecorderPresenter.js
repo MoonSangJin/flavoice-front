@@ -31,7 +31,7 @@ const StyledButton = styled.button`
   color: ${palette.white};
   background-color: ${palette.clude};
   border: none;
-  width: 120px;
+  width: 145px;
   height: 60px;
   border-radius: 20px;
   text-align: center;
@@ -72,15 +72,13 @@ const RecorderPresenter = ({
       </Link>
       <Form style={{ alignItems: 'center' }}>
         <Padding height={32} />
-        <StyledButton onClick={showType}>녹화한 파일보내기</StyledButton>
-        <Padding height={32} />
         <Text>
           {status === 'recording' ? (
-            '녹화 중'
+            '녹음 중'
           ) : status === 'stopped' ? (
-            '녹화 끝'
+            '녹음 끝'
           ) : (
-            <Text style={{ visibility: 'hidden' }}>녹화 </Text>
+            <Text style={{ visibility: 'hidden' }}>녹음 </Text>
           )}
         </Text>
         <Padding height={32} />
@@ -90,10 +88,10 @@ const RecorderPresenter = ({
             style={{ marginRight: '10px' }}
             active={status === 'recording'}
           >
-            녹화 시작
+            녹음 시작
           </StyledButton>
           <StyledButton onClick={stopRecording} active={status === 'stopped'}>
-            녹화 종료
+            녹음 종료
           </StyledButton>
         </Container>
         <Padding />
@@ -102,11 +100,16 @@ const RecorderPresenter = ({
         ) : (
           <audio style={{ visibility: 'hidden' }} controls />
         )}
+        <Padding height={32} />
+        <StyledButton onClick={showType} style={{ width: '65%' }}>
+          녹음한 파일보내기
+        </StyledButton>
       </Form>
 
       <Form>
         <Line />
         <Padding height={32} />
+        <Text>파일 업로드</Text>
         <AudioBlock>
           <Img src={Upload} alt={'logo'} />
           <input

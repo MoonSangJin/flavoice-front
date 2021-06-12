@@ -13,6 +13,7 @@ const RecorderContainer = () => {
     let blob = await fetch(mediaBlobUrl).then((record) => record.blob());
     console.log(blob);
     console.log(audioUrls);
+    alert('디비로 파일 보내기');
   };
 
   const nextId = useRef(1);
