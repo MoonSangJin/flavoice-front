@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import SignUpPresenter from './SignUpPresenter';
 
@@ -56,7 +57,7 @@ const SignUpContainer = () => {
     else return false;
   };
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     if (checkValidation()) {
       alert('가입완료');
     } else {
@@ -66,6 +67,17 @@ const SignUpContainer = () => {
     setAge('');
     setPhoneNumber('');
     setPassword('');
+
+    try {
+      await axios.post('apiurl', {
+        name: '문상진',
+        phoneNumber: '01012341234',
+        age: '1007-11-28',
+        password: '12341234',
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const handleOnKeyUp = (e) => {

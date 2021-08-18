@@ -24,6 +24,7 @@ const SignInContainer = () => {
     }
     return true;
   };
+
   const checkValidation = () => {
     if (isValidPassword()) return true;
     else return false;
@@ -37,6 +38,8 @@ const SignInContainer = () => {
     }
     setPhoneNumber('');
     setPassword('');
+
+    //todo : api 나올때까지 axios 대기
   };
 
   const handleOnKeyUp = (e) => {
