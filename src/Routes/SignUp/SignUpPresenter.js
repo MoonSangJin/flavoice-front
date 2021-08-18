@@ -7,27 +7,21 @@ import Logo from '../../../src/logo.png';
 import Text from '../../Components/Text';
 import palette from '../../lib/styles/paletts.js';
 
-import { useHistory } from 'react-router-dom';
-
 const SignUpPresenter = ({
-  email,
+  name,
+  nameChangeHandler,
+  phoneNumber,
+  phoneNumberChangeHandler,
+  age,
+  ageChangeHandler,
   password,
-  emailValidationMessage,
-  setEmailValidationMessage,
   passwordValidationMessage,
   setPasswordValidationMessage,
   handleSignUp,
-  emailChangeHandler,
   passwordChangeHandler,
-  isValidEmail,
   isValidPassword,
   handleOnKeyUp,
-  name,
-  nameChangeHandler,
-  age,
-  ageChangeHandler,
 }) => {
-  const history = useHistory();
   return (
     <>
       <Link to="/">
@@ -39,28 +33,25 @@ const SignUpPresenter = ({
       <AuthContainer>
         <Input
           value={name}
-          placeholder={'이름'}
+          placeholder={'Name'}
           onChange={nameChangeHandler}
           validationMessage={''}
         />
         <Input
+          value={phoneNumber}
+          placeholder={'PhoneNumber (without -)'}
+          onChange={phoneNumberChangeHandler}
+          validationMessage={''}
+        />
+        <Input
           value={age}
-          placeholder={'나이'}
+          placeholder={'Age (YYYY-MM-DD)'}
           onChange={ageChangeHandler}
           validationMessage={''}
         />
         <Input
-          value={email}
-          placeholder={'Email'}
-          validationMessage={emailValidationMessage}
-          onChange={emailChangeHandler}
-          onFocus={() => setEmailValidationMessage('')}
-          onBlur={isValidEmail}
-          onKeyUp={handleOnKeyUp}
-        />
-        <Input
           value={password}
-          placeholder={'Password'}
+          placeholder={'Password (at least 8 characters)'}
           validationMessage={passwordValidationMessage}
           onChange={passwordChangeHandler}
           onFocus={() => setPasswordValidationMessage('')}
@@ -68,7 +59,7 @@ const SignUpPresenter = ({
           onKeyUp={handleOnKeyUp}
           type={'password'}
         />
-        <CompleteButton onClick={() => history.push('/signin')}>
+        <CompleteButton onClick={handleSignUp}>
           <Text hover textAlign={'center'} white style={{ paddingTop: '2px' }}>
             가입완료
           </Text>

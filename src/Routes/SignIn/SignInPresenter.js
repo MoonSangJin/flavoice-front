@@ -5,23 +5,20 @@ import BackButton from '../../Components/BackButton';
 import Input from '../../Components/Input';
 import Logo from '../../../src/logo.png';
 import Text from '../../Components/Text';
-import { useHistory } from 'react-router-dom';
 
 const SignInPresenter = ({
-  email,
+  phoneNumber,
+  phoneNumberChangeHandler,
+  phoneNumberValidationMessage,
+  setPhoneNumberValidationMessage,
   password,
-  emailValidationMessage,
-  setEmailValidationMessage,
+  passwordChangeHandler,
   passwordValidationMessage,
   setPasswordValidationMessage,
   handleSignIn,
-  emailChangeHandler,
-  passwordChangeHandler,
-  isValidEmail,
   isValidPassword,
   handleOnKeyUp,
 }) => {
-  const history = useHistory();
   return (
     <>
       <Link to="/">
@@ -32,17 +29,16 @@ const SignInPresenter = ({
       </LogoRow>
       <AuthContainer>
         <Input
-          value={email}
-          placeholder={'Email'}
-          validationMessage={emailValidationMessage}
-          onChange={emailChangeHandler}
-          onFocus={() => setEmailValidationMessage('')}
-          onBlur={isValidEmail}
+          value={phoneNumber}
+          placeholder={'PhoneNumber (without -)'}
+          validationMessage={phoneNumberValidationMessage}
+          onChange={phoneNumberChangeHandler}
+          //toDo(상진) : onFocus 부분
           onKeyUp={handleOnKeyUp}
         />
         <Input
           value={password}
-          placeholder={'Password'}
+          placeholder={'Password (at least 8 characters)'}
           validationMessage={passwordValidationMessage}
           onChange={passwordChangeHandler}
           onFocus={() => setPasswordValidationMessage('')}
@@ -50,7 +46,7 @@ const SignInPresenter = ({
           onKeyUp={handleOnKeyUp}
           type={'password'}
         />
-        <CompleteButton onClick={() => history.push('/recorder')}>
+        <CompleteButton onClick={handleSignIn}>
           <Text hover textAlign={'center'} white>
             로그인
           </Text>

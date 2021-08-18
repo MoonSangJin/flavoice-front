@@ -2,32 +2,19 @@ import React, { useState } from 'react';
 import SignInPresenter from './SignInPresenter';
 
 const SignInContainer = () => {
-  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
-  const [emailValidationMessage, setEmailValidationMessage] = useState('');
+  const [phoneNumberValidationMessage, setPhoneNumberValidationMessage] =
+    useState('');
   const [passwordValidationMessage, setPasswordValidationMessage] =
     useState('');
 
-  const emailChangeHandler = (e) => {
-    setEmail(e.target.value);
+  const phoneNumberChangeHandler = (e) => {
+    setPhoneNumber(e.target.value);
   };
   const passwordChangeHandler = (e) => {
     setPassword(e.target.value);
   };
-
-  const isValidEmail = () => {
-    const emailRegex =
-      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    if (!emailRegex.test(email)) {
-      setEmailValidationMessage('please enter a valid email.');
-
-      return false;
-    }
-
-    return true;
-  };
-
   const isValidPassword = () => {
     if (password.length < 8) {
       setPasswordValidationMessage(
@@ -37,20 +24,19 @@ const SignInContainer = () => {
     }
     return true;
   };
-
   const checkValidation = () => {
-    let isValid = true;
-    isValid = isValidEmail() && isValid;
-    isValid = isValidPassword() && isValid;
-    return isValid;
+    if (isValidPassword()) return true;
+    else return false;
   };
 
   const handleSignIn = () => {
-    const isValid = checkValidation();
-    if (isValid) {
-      setEmail('');
-      setPassword('');
+    if (phoneNumber && checkValidation()) {
+      alert('signin api 연결');
+    } else {
+      alert('signin 실패');
     }
+    setPhoneNumber('');
+    setPassword('');
   };
 
   const handleOnKeyUp = (e) => {
@@ -65,16 +51,15 @@ const SignInContainer = () => {
     <div>
       <SignInPresenter
         {...{
-          email,
+          phoneNumber,
+          phoneNumberChangeHandler,
+          phoneNumberValidationMessage,
+          setPhoneNumberValidationMessage,
           password,
-          emailValidationMessage,
-          setEmailValidationMessage,
+          passwordChangeHandler,
           passwordValidationMessage,
           setPasswordValidationMessage,
           handleSignIn,
-          emailChangeHandler,
-          passwordChangeHandler,
-          isValidEmail,
           isValidPassword,
           handleOnKeyUp,
         }}
