@@ -64,6 +64,7 @@ const RecorderPresenter = ({
   onInsert,
   onRemove,
   audioUrls,
+  testPost,
 }) => {
   return (
     <>
@@ -104,6 +105,8 @@ const RecorderPresenter = ({
         <StyledButton onClick={showType} style={{ width: '65%' }}>
           녹음한 파일보내기
         </StyledButton>
+
+        <button onClick={testPost}> 테스트</button>
       </Form>
 
       <Form>

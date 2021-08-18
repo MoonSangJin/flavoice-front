@@ -3,26 +3,30 @@ import SignUpPresenter from './SignUpPresenter';
 
 const SignUpContainer = () => {
   const [name, setName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [age, setAge] = useState('');
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [emailValidationMessage, setEmailValidationMessage] = useState('');
   const [passwordValidationMessage, setPasswordValidationMessage] =
     useState('');
+  //const [email, setEmail] = useState('');
+  //const [emailValidationMessage, setEmailValidationMessage] = useState('');
 
-  const emailChangeHandler = (e) => {
-    setEmail(e.target.value);
-  };
-  const passwordChangeHandler = (e) => {
-    setPassword(e.target.value);
-  };
   const nameChangeHandler = (e) => {
     setName(e.target.value);
+  };
+  const phoneNumberChangeHandler = (e) => {
+    setPhoneNumber(e.target.value);
   };
   const ageChangeHandler = (e) => {
     setAge(e.target.value);
   };
+  const passwordChangeHandler = (e) => {
+    setPassword(e.target.value);
+  };
 
+  /* const emailChangeHandler = (e) => {
+    setEmail(e.target.value);
+  };
   const isValidEmail = () => {
     const emailRegex =
       /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -34,7 +38,7 @@ const SignUpContainer = () => {
     }
 
     return true;
-  };
+  };*/
 
   const isValidPassword = () => {
     if (password.length < 8) {
@@ -47,22 +51,21 @@ const SignUpContainer = () => {
   };
 
   const checkValidation = () => {
-    let isValid = true;
-    isValid = isValidEmail() && isValid;
-    isValid = isValidPassword() && isValid;
-
-    return isValid;
+    if (name && phoneNumber && age && password && isValidPassword())
+      return true;
+    else return false;
   };
 
   const handleSignUp = () => {
-    const isValid = checkValidation();
-    if (isValid) {
+    if (checkValidation()) {
       alert('가입완료');
-      setName('');
-      setAge('');
-      setEmail('');
-      setPassword('');
+    } else {
+      alert('가입실패');
     }
+    setName('');
+    setAge('');
+    setPhoneNumber('');
+    setPassword('');
   };
 
   const handleOnKeyUp = (e) => {
@@ -77,22 +80,19 @@ const SignUpContainer = () => {
     <div>
       <SignUpPresenter
         {...{
-          email,
+          name,
+          nameChangeHandler,
+          phoneNumber,
+          phoneNumberChangeHandler,
+          age,
+          ageChangeHandler,
           password,
-          emailValidationMessage,
-          setEmailValidationMessage,
           passwordValidationMessage,
           setPasswordValidationMessage,
           handleSignUp,
-          emailChangeHandler,
           passwordChangeHandler,
-          isValidEmail,
           isValidPassword,
           handleOnKeyUp,
-          name,
-          nameChangeHandler,
-          age,
-          ageChangeHandler,
         }}
       />
     </div>

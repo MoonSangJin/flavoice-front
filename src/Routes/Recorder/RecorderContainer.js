@@ -2,6 +2,8 @@ import React, { useRef, useState } from 'react';
 import RecorderPresenter from './RecorderPresenter';
 import { useReactMediaRecorder } from 'react-media-recorder';
 
+import axios from 'axios';
+
 const RecorderContainer = () => {
   const { status, startRecording, stopRecording, mediaBlobUrl } =
     useReactMediaRecorder({ audio: true });
@@ -10,10 +12,28 @@ const RecorderContainer = () => {
 
   const showType = async () => {
     console.log(mediaBlobUrl);
-    let blob = await fetch(mediaBlobUrl).then((record) => record.blob());
+    var blob = await fetch(mediaBlobUrl).then((record) => record.blob());
     console.log(blob);
     console.log(audioUrls);
     alert('디비로 파일 보내기');
+  };
+
+  const testPost = (blob) => {
+    fetch('https://jsonplaceholder.typicode.com/posts/1', {
+      method: 'PUT',
+      body: JSON.stringify({
+        id: 1,
+        title: 'foo',
+        body: 'bar',
+        userId: 1,
+        audio: audioUrls,
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => console.log(json));
   };
 
   const nextId = useRef(1);
@@ -56,6 +76,7 @@ const RecorderContainer = () => {
         {...{ stopRecording }}
         {...{ onInsert }}
         {...{ onRemove }}
+        {...{ testPost }}
       />
     </div>
   );
