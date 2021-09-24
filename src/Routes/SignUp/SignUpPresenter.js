@@ -29,6 +29,8 @@ const SignUpPresenter = ({ handleChange, handleSubmit }) => {
           label="password"
           onChange={handleChange('password1')}
           margin="dense"
+          type="password"
+          // TODO : 추후 고도화 작업시 password1,password2 일치 여부와, 8자 이상등 필터링 조건 필요 (상진)
         />
         <TextField
           required
@@ -36,6 +38,7 @@ const SignUpPresenter = ({ handleChange, handleSubmit }) => {
           label="password repeat"
           onChange={handleChange('password2')}
           margin="dense"
+          type="password"
         />
         <TextField
           required

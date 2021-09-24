@@ -1,10 +1,11 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import SignUpPresenter from './SignUpPresenter';
 
 const SignUpContainer = () => {
-  const [values, setValues] = React.useState({
+  const history = useHistory();
+  const [values, setValues] = useState({
     email: '',
     password1: '',
     password2: '',
@@ -22,7 +23,8 @@ const SignUpContainer = () => {
     console.log(values);
     try {
       await axios.post('https://flavoice.shop/accounts/registration/', values);
-      alert('회원가입이 완료되었습니다.');
+      alert('회원가입이 완료되었습니다. 이메일을 확인해주세요');
+      history.push('/signin');
     } catch (e) {
       console.log(e);
     }

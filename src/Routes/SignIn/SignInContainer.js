@@ -1,72 +1,47 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import SignInPresenter from './SignInPresenter';
+import { useHistory } from 'react-router-dom';
 
 const SignInContainer = () => {
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [password, setPassword] = useState('');
-  const [phoneNumberValidationMessage, setPhoneNumberValidationMessage] =
-    useState('');
-  const [passwordValidationMessage, setPasswordValidationMessage] =
-    useState('');
+  const history = useHistory();
+  const [values, setValues] = useState({
+    email: '',
+    password: '',
+  });
 
-  const phoneNumberChangeHandler = (e) => {
-    setPhoneNumber(e.target.value);
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
   };
-  const passwordChangeHandler = (e) => {
-    setPassword(e.target.value);
-  };
-  const isValidPassword = () => {
-    if (password.length < 8) {
-      setPasswordValidationMessage(
-        'please enter a password of at least 8 characters'
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(values);
+
+    try {
+      const result = await axios.post(
+        'https://flavoice.shop/accounts/login/',
+        values
       );
-      return false;
-    }
-    return true;
-  };
+      console.log(result);
 
-  const checkValidation = () => {
-    if (isValidPassword()) return true;
-    else return false;
-  };
-
-  const handleSignIn = () => {
-    if (phoneNumber && checkValidation()) {
-      alert('signin api 연결');
-    } else {
-      alert('signin 실패');
-    }
-    setPhoneNumber('');
-    setPassword('');
-
-    //todo : api 나올때까지 axios 대기
-  };
-
-  const handleOnKeyUp = (e) => {
-    const enterKeyCode = 13;
-
-    if (e.keyCode === enterKeyCode) {
-      handleSignIn();
+      const { data } = result;
+      const accessToken = data['access_token'];
+      const refreshToken = data['refresh_token']; //ToDo refreshToken 활용방안 : 유효시간 따라 다르게
+      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+      alert('로그인 완료');
+      const userData = await axios.get('https://flavoice.shop/accounts/user');
+      console.log(`user 정보 ${JSON.stringify(userData)}`);
+      localStorage.setItem('token', accessToken);
+      history.push('/');
+    } catch (e) {
+      console.log(e);
     }
   };
 
   return (
     <div>
-      <SignInPresenter
-        {...{
-          phoneNumber,
-          phoneNumberChangeHandler,
-          phoneNumberValidationMessage,
-          setPhoneNumberValidationMessage,
-          password,
-          passwordChangeHandler,
-          passwordValidationMessage,
-          setPasswordValidationMessage,
-          handleSignIn,
-          isValidPassword,
-          handleOnKeyUp,
-        }}
-      />
+      <SignInPresenter {...{ handleChange, handleSubmit }} />
     </div>
   );
 };
