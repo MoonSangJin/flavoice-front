@@ -60,6 +60,7 @@ const RecorderPresenter = ({
   status,
   startRecording,
   stopRecording,
+  onToggle,
   mediaBlobUrl,
   onInsert,
   onRemove,
@@ -73,25 +74,17 @@ const RecorderPresenter = ({
       </Link>
       <Form style={{ alignItems: 'center' }}>
         <Padding height={32} />
-        <Text>
-          {status === 'recording' ? (
-            '녹음 중'
-          ) : status === 'stopped' ? (
-            '녹음 끝'
-          ) : (
-            <Text style={{ visibility: 'hidden' }}>녹음 </Text>
-          )}
-        </Text>
+        <Text>{status === 'recording' ? '녹음 중' : '녹음 끝'}</Text>
         <Padding height={32} />
         <Container>
           <StyledButton
-            onClick={startRecording}
+            onClick={onToggle}
             style={{ marginRight: '10px' }}
             active={status === 'recording'}
           >
             녹음 시작
           </StyledButton>
-          <StyledButton onClick={stopRecording} active={status === 'stopped'}>
+          <StyledButton onClick={onToggle} active={status === 'stopped'}>
             녹음 종료
           </StyledButton>
         </Container>
