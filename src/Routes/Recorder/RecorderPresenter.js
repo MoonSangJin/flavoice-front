@@ -60,7 +60,6 @@ const RecorderPresenter = ({
   status,
   startRecording,
   stopRecording,
-  onToggle,
   mediaBlobUrl,
   onInsert,
   onRemove,
@@ -74,34 +73,42 @@ const RecorderPresenter = ({
       </Link>
       <Form style={{ alignItems: 'center' }}>
         <Padding height={32} />
-        <Text>{status === 'recording' ? '녹음 중' : '녹음 끝'}</Text>
+        {status === 'recording' ? (
+          <Text>녹음 중</Text>
+        ) : status === 'stopped' ? (
+          <Text>녹음 끝</Text>
+        ) : (
+          <Text style={{ visibility: 'hidden' }}>녹음 </Text>
+        )}
         <Padding height={32} />
         <Container>
           <StyledButton
-            onClick={onToggle}
+            onClick={startRecording}
             style={{ marginRight: '10px' }}
             active={status === 'recording'}
           >
             녹음 시작
           </StyledButton>
-          <StyledButton onClick={onToggle} active={status === 'stopped'}>
+          <StyledButton onClick={stopRecording} active={status === 'stopped'}>
             녹음 종료
           </StyledButton>
         </Container>
         <Padding />
         {status === 'stopped' ? (
-          <audio src={mediaBlobUrl} controls />
+          <audio
+            src={mediaBlobUrl}
+            style={{ width: '400px', height: '100px' }}
+            controls
+          />
         ) : (
-          <audio style={{ visibility: 'hidden' }} controls />
+          <video style={{ visibility: 'hidden' }} controls />
         )}
         <Padding height={32} />
         <StyledButton onClick={showType} style={{ width: '65%' }}>
           녹음한 파일보내기
         </StyledButton>
-
-        <button onClick={testPost}> 테스트</button>
       </Form>
-
+      <button onClick={testPost}>API</button>
       <Form>
         <Line />
         <Padding height={32} />
