@@ -5,27 +5,7 @@ import Text from '../../Components/Text';
 import Form from '../../Components/Form';
 import styled, { css } from 'styled-components';
 import palette from '../../lib/styles/paletts';
-import Line from '../../Components/Line';
 import Padding from '../../Components/Padding';
-import Upload from '../../../src/cloud.png';
-
-const ImBlock = styled.div`
-  position: relative;
-`;
-
-const Img = styled.img`
-  width: 200px;
-  height: 150px;
-`;
-
-const AudioBlock = styled.label`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
-  cursor: pointer;
-`;
 
 const StyledButton = styled.button`
   color: ${palette.white};
@@ -83,13 +63,20 @@ const RecorderPresenter = ({
         <Padding height={32} />
         <Container>
           <StyledButton
-            onClick={startRecording}
+            onClick={() => {
+              startRecording();
+            }}
             style={{ marginRight: '10px' }}
             active={status === 'recording'}
           >
             녹음 시작
           </StyledButton>
-          <StyledButton onClick={stopRecording} active={status === 'stopped'}>
+          <StyledButton
+            onClick={() => {
+              stopRecording();
+            }}
+            active={status === 'stopped'}
+          >
             녹음 종료
           </StyledButton>
         </Container>
@@ -109,50 +96,6 @@ const RecorderPresenter = ({
         </StyledButton>
       </Form>
       <button onClick={testPost}>API</button>
-      <Form>
-        <Line />
-        <Padding height={32} />
-        <Text>파일 업로드</Text>
-        <AudioBlock>
-          <Img src={Upload} alt={'logo'} />
-          <input
-            style={{ display: 'none' }}
-            type="file"
-            multiple
-            accept="audio/*"
-            onChange={onInsert}
-          />
-        </AudioBlock>
-        <Padding />
-        {audioUrls.map((audioUrl, i) => (
-          <div key={i + 1}>
-            {i === 0 ? null : (
-              <ImBlock
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                }}
-              >
-                <audio
-                  controls
-                  style={{ marginBottom: '10px', marginTop: '20px' }}
-                >
-                  <source src={audioUrl.fileUrl} type="audio/wav" />
-                </audio>
-                <div>
-                  <StyledButton style={{ marginRight: '10px' }}>
-                    목소리 선택
-                  </StyledButton>
-                  <StyledButton onClick={() => onRemove(audioUrl.id)}>
-                    삭제
-                  </StyledButton>
-                </div>
-              </ImBlock>
-            )}
-          </div>
-        ))}
-      </Form>
     </>
   );
 };
