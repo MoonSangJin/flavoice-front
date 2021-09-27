@@ -9,9 +9,9 @@ const RecorderContainer = () => {
     useReactMediaRecorder({ video: true });
   const [start, setStart] = useState(false);
 
-  // useEffect(() => {
-  //   console.log('상태', status);
-  // }, [status]);
+  useEffect(() => {
+    console.log('상태', status);
+  }, [status]);
 
   const testPost = async () => {
     console.log('테스트 post');
@@ -19,15 +19,20 @@ const RecorderContainer = () => {
 
   const mounted = useRef(false);
   const maxPitch = useRef(-1);
-  const flag = useRef(true);
+  const stop = useRef(true);
+  const localstream = useRef('');
 
   useEffect(() => {
     if (!mounted.current) {
       mounted.current = true;
     } else {
-      if (!start) {
-        return;
-      }
+      const check = () => {
+        if (start === false) {
+          console.log('useEffect 종료');
+          return false;
+        } else return true;
+      };
+
       const script = document.createElement('script');
 
       script.src =
@@ -44,6 +49,7 @@ const RecorderContainer = () => {
       let model;
 
       async function startDemo() {
+        console.log('음표추출 시작');
         model = await tf.loadGraphModel(MODEL_URL, { fromTFHub: true });
         navigator.mediaDevices
           .getUserMedia({ audio: true, video: false })
@@ -63,6 +69,8 @@ const RecorderContainer = () => {
       }
 
       function handleSuccess(stream) {
+        let localstream = stream;
+
         var context = new AudioContext({
           latencyHint: 'playback',
           sampleRate: MODEL_SAMPLE_RATE,
@@ -75,14 +83,12 @@ const RecorderContainer = () => {
         processor.channelCount = 1;
         source.connect(processor);
         processor.connect(context.destination);
-
         processor.onaudioprocess = function (e) {
-          if (flag.current) {
-            console.log('종료');
-            flag.current = !flag.current;
+          if (stop.current === true) {
+            console.log('onaudioprocess 종료');
+            stop.current = !stop.current;
             source.disconnect(processor);
             processor.disconnect(context.destination);
-            return;
           }
 
           const inputData = e.inputBuffer.getChannelData(0);
@@ -106,32 +112,31 @@ const RecorderContainer = () => {
         };
       }
 
-      startDemo();
+      if (check() === true) {
+        startDemo();
+      }
     }
   }, [start]);
 
-  console.log('현재', maxPitch);
-  const onToggle = () => {
-    flag.current = !flag.current;
-    console.log(flag.current);
-    setStart(!start);
+  const onStart = () => {
+    startRecording();
+    setStart(true);
+    stop.current = false;
+  };
+
+  const onStop = () => {
+    stopRecording();
+    setStart(false);
+    stop.current = true;
   };
 
   return (
     <div>
-      <button
-        onClick={() => {
-          onToggle();
-        }}
-      >
-        토글버튼
-      </button>
-
       <RecorderPresenter
         {...{ status }}
         {...{ mediaBlobUrl }}
-        {...{ startRecording }}
-        {...{ stopRecording }}
+        {...{ onStart }}
+        {...{ onStop }}
         {...{ testPost }}
       />
     </div>

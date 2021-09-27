@@ -35,17 +35,7 @@ const Container = styled.div`
   display: flex;
 `;
 
-const RecorderPresenter = ({
-  showType,
-  status,
-  startRecording,
-  stopRecording,
-  mediaBlobUrl,
-  onInsert,
-  onRemove,
-  audioUrls,
-  testPost,
-}) => {
+const RecorderPresenter = ({ status, onStart, onStop, mediaBlobUrl }) => {
   return (
     <>
       <Link to="/">
@@ -57,26 +47,21 @@ const RecorderPresenter = ({
           <Text>녹음 중</Text>
         ) : status === 'stopped' ? (
           <Text>녹음 끝</Text>
+        ) : status === 'acquiring_media' ? (
+          <Text>잠시 기다려 주세요.</Text>
         ) : (
           <Text style={{ visibility: 'hidden' }}>녹음 </Text>
         )}
         <Padding height={32} />
         <Container>
           <StyledButton
-            onClick={() => {
-              startRecording();
-            }}
+            onClick={onStart}
             style={{ marginRight: '10px' }}
             active={status === 'recording'}
           >
             녹음 시작
           </StyledButton>
-          <StyledButton
-            onClick={() => {
-              stopRecording();
-            }}
-            active={status === 'stopped'}
-          >
+          <StyledButton onClick={onStop} active={status === 'stopped'}>
             녹음 종료
           </StyledButton>
         </Container>
@@ -91,11 +76,8 @@ const RecorderPresenter = ({
           <video style={{ visibility: 'hidden' }} controls />
         )}
         <Padding height={32} />
-        <StyledButton onClick={showType} style={{ width: '65%' }}>
-          녹음한 파일보내기
-        </StyledButton>
+        <StyledButton style={{ width: '65%' }}>녹음한 파일보내기</StyledButton>
       </Form>
-      <button onClick={testPost}>API</button>
     </>
   );
 };
