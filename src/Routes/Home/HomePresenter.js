@@ -23,6 +23,9 @@ const HomePresenter = () => {
         <Link to="/displayComponents">
           <Button content={'Display Components'} />
         </Link>
+        <Link to="/displayResult">
+          <Button content={'Display Result'} />
+        </Link>
       </Form>
     </>
   );
