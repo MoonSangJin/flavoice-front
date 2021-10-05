@@ -2,23 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import BackButton from '../../Components/BackButton';
-import Input from '../../Components/Input';
 import Logo from '../../../src/logo.png';
-import Text from '../../Components/Text';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 
-const SignInPresenter = ({
-  phoneNumber,
-  phoneNumberChangeHandler,
-  phoneNumberValidationMessage,
-  setPhoneNumberValidationMessage,
-  password,
-  passwordChangeHandler,
-  passwordValidationMessage,
-  setPasswordValidationMessage,
-  handleSignIn,
-  isValidPassword,
-  handleOnKeyUp,
-}) => {
+const SignInPresenter = ({ handleChange, handleSubmit }) => {
   return (
     <>
       <Link to="/">
@@ -27,51 +15,39 @@ const SignInPresenter = ({
       <LogoRow>
         <img src={Logo} alt={'logo'} />
       </LogoRow>
-      <AuthContainer>
-        <Input
-          value={phoneNumber}
-          placeholder={'PhoneNumber (without -)'}
-          validationMessage={phoneNumberValidationMessage}
-          onChange={phoneNumberChangeHandler}
-          //toDo(상진) : onFocus 부분
-          onKeyUp={handleOnKeyUp}
+      <AuthContainer id="signinForm" onSubmit={handleSubmit}>
+        <TextField
+          required
+          id="filled-required"
+          label="Email"
+          onChange={handleChange('email')}
+          margin="dense"
         />
-        <Input
-          value={password}
-          placeholder={'Password (at least 8 characters)'}
-          validationMessage={passwordValidationMessage}
-          onChange={passwordChangeHandler}
-          onFocus={() => setPasswordValidationMessage('')}
-          onBlur={isValidPassword}
-          onKeyUp={handleOnKeyUp}
-          type={'password'}
+        <TextField
+          required
+          id="filled-required"
+          label="password"
+          onChange={handleChange('password')}
+          margin="dense"
+          type="password"
         />
-        <CompleteButton onClick={handleSignIn}>
-          <Text hover textAlign={'center'} white>
-            로그인
-          </Text>
-        </CompleteButton>
+        <Button type="submit" form="signinForm" variant="contained">
+          Login
+        </Button>
       </AuthContainer>
     </>
   );
 };
-const AuthContainer = styled.div`
-  margin-top: 64px;
+
+const AuthContainer = styled.form`
+  display: flex;
+  flex-direction: column;
+  margin: 10%;
 `;
 const LogoRow = styled.div`
   width: 100%;
   text-align: center;
   margin-top: 10%;
-`;
-const CompleteButton = styled.div`
-  width: 150px;
-  height: 33px;
-  background: #4b93d3;
-  border-radius: 13px;
-  margin: 0 auto;
-  text-align: center;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  margin-top: 10px;
 `;
 
 export default SignInPresenter;

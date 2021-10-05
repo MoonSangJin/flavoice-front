@@ -1,100 +1,38 @@
+import axios from 'axios';
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import SignUpPresenter from './SignUpPresenter';
 
 const SignUpContainer = () => {
-  const [name, setName] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [age, setAge] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordValidationMessage, setPasswordValidationMessage] =
-    useState('');
-  //const [email, setEmail] = useState('');
-  //const [emailValidationMessage, setEmailValidationMessage] = useState('');
+  const history = useHistory();
+  const [values, setValues] = useState({
+    email: '',
+    password1: '',
+    password2: '',
+    phone_number: '',
+    birthday: '',
+    gender: '',
+  });
 
-  const nameChangeHandler = (e) => {
-    setName(e.target.value);
-  };
-  const phoneNumberChangeHandler = (e) => {
-    setPhoneNumber(e.target.value);
-  };
-  const ageChangeHandler = (e) => {
-    setAge(e.target.value);
-  };
-  const passwordChangeHandler = (e) => {
-    setPassword(e.target.value);
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
   };
 
-  /* const emailChangeHandler = (e) => {
-    setEmail(e.target.value);
-  };
-  const isValidEmail = () => {
-    const emailRegex =
-      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    if (!emailRegex.test(email)) {
-      setEmailValidationMessage('please enter a valid email.');
-
-      return false;
-    }
-
-    return true;
-  };*/
-
-  const isValidPassword = () => {
-    if (password.length < 8) {
-      setPasswordValidationMessage(
-        'please enter a password of at least 8 characters'
-      );
-      return false;
-    }
-    return true;
-  };
-
-  const checkValidation = () => {
-    if (name && phoneNumber && age && password && isValidPassword())
-      return true;
-    else return false;
-  };
-
-  const handleSignUp = () => {
-    if (checkValidation()) {
-      alert('가입완료');
-    } else {
-      alert('가입실패');
-    }
-    setName('');
-    setAge('');
-    setPhoneNumber('');
-    setPassword('');
-  };
-
-  const handleOnKeyUp = (e) => {
-    const enterKeyCode = 13;
-
-    if (e.keyCode === enterKeyCode) {
-      handleSignUp();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(values);
+    try {
+      await axios.post('https://flavoice.shop/accounts/registration/', values);
+      alert('회원가입이 완료되었습니다. 이메일을 확인해주세요');
+      history.push('/signin');
+    } catch (e) {
+      console.log(e);
     }
   };
 
   return (
     <div>
-      <SignUpPresenter
-        {...{
-          name,
-          nameChangeHandler,
-          phoneNumber,
-          phoneNumberChangeHandler,
-          age,
-          ageChangeHandler,
-          password,
-          passwordValidationMessage,
-          setPasswordValidationMessage,
-          handleSignUp,
-          passwordChangeHandler,
-          isValidPassword,
-          handleOnKeyUp,
-        }}
-      />
+      <SignUpPresenter {...{ values, handleChange, handleSubmit }} />
     </div>
   );
 };
