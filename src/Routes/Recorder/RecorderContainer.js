@@ -9,23 +9,22 @@ const RecorderContainer = () => {
     useReactMediaRecorder({ video: true });
   const [start, setStart] = useState(false);
 
-  useEffect(() => {
-    console.log('상태', status);
-  }, [status]);
-
-  const testPost = async () => {
-    console.log('테스트 post');
-  };
-
   const mounted = useRef(false);
   const maxPitch = useRef(-1);
   const stop = useRef(true);
-  const localstream = useRef('');
+  const stopped = useRef(0);
+
+  useEffect(() => {
+    console.log(status);
+    if (status === 'stopped') {
+      stopped.current++;
+    }
+  }, [status]);
 
   useEffect(() => {
     if (!mounted.current) {
       mounted.current = true;
-    } else {
+    } else if (status === 'recording') {
       const check = () => {
         if (start === false) {
           console.log('useEffect 종료');
@@ -34,7 +33,6 @@ const RecorderContainer = () => {
       };
 
       const script = document.createElement('script');
-
       script.src =
         'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.2.9/dist/tf.min.js';
       script.async = true;
@@ -50,6 +48,7 @@ const RecorderContainer = () => {
 
       async function startDemo() {
         console.log('음표추출 시작');
+        maxPitch.current = -1;
         model = await tf.loadGraphModel(MODEL_URL, { fromTFHub: true });
         navigator.mediaDevices
           .getUserMedia({ audio: true, video: false })
@@ -69,9 +68,7 @@ const RecorderContainer = () => {
       }
 
       function handleSuccess(stream) {
-        let localstream = stream;
-
-        var context = new AudioContext({
+        let context = new AudioContext({
           latencyHint: 'playback',
           sampleRate: MODEL_SAMPLE_RATE,
         });
@@ -83,12 +80,21 @@ const RecorderContainer = () => {
         processor.channelCount = 1;
         source.connect(processor);
         processor.connect(context.destination);
+
         processor.onaudioprocess = function (e) {
-          if (stop.current === true) {
+          console.log(stopped.current);
+          if (0 < stopped.current) {
             console.log('onaudioprocess 종료');
-            stop.current = !stop.current;
-            source.disconnect(processor);
-            processor.disconnect(context.destination);
+            console.log('상태', status);
+            if (
+              source.connect(processor) &&
+              processor.connect(context.destination)
+            ) {
+              source.disconnect(processor);
+              processor.disconnect(context.destination);
+            }
+            stopped.current = 0;
+            return;
           }
 
           const inputData = e.inputBuffer.getChannelData(0);
@@ -103,6 +109,7 @@ const RecorderContainer = () => {
               continue;
             }
             let pitch = getPitchHz(pitches[i]);
+            console.log(status, stop.current);
             console.log(pitch);
             if (pitch > maxPitch.current) {
               maxPitch.current = pitch;
@@ -112,22 +119,32 @@ const RecorderContainer = () => {
         };
       }
 
-      if (check() === true) {
+      if (check()) {
         startDemo();
       }
     }
-  }, [start]);
+  }, [start, status]);
+
+  useEffect(() => {
+    return () => {
+      window.location.reload();
+    };
+  }, []);
 
   const onStart = () => {
     startRecording();
     setStart(true);
     stop.current = false;
+    stopped.current = 0;
   };
 
   const onStop = () => {
     stopRecording();
     setStart(false);
     stop.current = true;
+    stopped.current += 1;
+    console.log('종료 cnt', stopped.current);
+    console.log('맥스', maxPitch.current);
   };
 
   return (
@@ -137,7 +154,6 @@ const RecorderContainer = () => {
         {...{ mediaBlobUrl }}
         {...{ onStart }}
         {...{ onStop }}
-        {...{ testPost }}
       />
     </div>
   );

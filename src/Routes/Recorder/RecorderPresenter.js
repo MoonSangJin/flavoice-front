@@ -54,16 +54,27 @@ const RecorderPresenter = ({ status, onStart, onStop, mediaBlobUrl }) => {
         )}
         <Padding height={32} />
         <Container>
-          <StyledButton
-            onClick={onStart}
-            style={{ marginRight: '10px' }}
-            active={status === 'recording'}
-          >
-            녹음 시작
-          </StyledButton>
-          <StyledButton onClick={onStop} active={status === 'stopped'}>
-            녹음 종료
-          </StyledButton>
+          {status === 'acquiring_media' ? (
+            <>
+              <StyledButton style={{ marginRight: '10px' }}>
+                녹음 시작
+              </StyledButton>
+              <StyledButton onClick={onStop}>녹음 종료</StyledButton>
+            </>
+          ) : (
+            <>
+              <StyledButton
+                onClick={onStart}
+                style={{ marginRight: '10px' }}
+                active={status === 'recording'}
+              >
+                녹음 시작
+              </StyledButton>
+              <StyledButton onClick={onStop} active={status === 'stopped'}>
+                녹음 종료
+              </StyledButton>
+            </>
+          )}
         </Container>
         <Padding />
         {status === 'stopped' ? (
