@@ -23,8 +23,21 @@ const SignInContainer = () => {
         'https://flavoice.shop/accounts/token/refresh/',
         { refresh: refreshToken }
       );
-      console.log('refresh 성공');
-      console.log(JSON.stringify(refreshResult));
+      const refreshAccessToken = refreshResult['access'];
+
+      if (localStorage.getItem('token') !== refreshAccessToken) {
+        console.log('access token과 refresh access 달라서 ACCESS 갱신되었음');
+        axios.defaults.headers.common[
+          'Authorization'
+        ] = `Bearer ${refreshAccessToken}}`;
+        localStorage.setItem('token', refreshAccessToken);
+      }
+
+      setTimeout(
+        () => onSilentRefresh(refreshToken),
+        JWT_ACCESS_EXPIRY_TIME - 60000
+      );
+      //token refresh 과정을 재귀식으로 자동으로 UPDATE 하는 방식인데, 로그아웃했을때는 재귀가 돌아가면 안되니까 이방식은 추후 수정 필요(상진)
     } catch (e) {
       console.log('refresh실패');
       console.log(e);
@@ -40,21 +53,18 @@ const SignInContainer = () => {
         'https://flavoice.shop/accounts/login/',
         values
       );
-      console.log(JSON.stringify(result));
 
       const { data } = result;
       const accessToken = data['access_token'];
-      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}}`;
+      localStorage.setItem('token', accessToken);
       const refreshToken = data['refresh_token']; //ToDo refreshToken 활용방안 : 유효시간 따라 다르게
       alert('로그인 완료');
-      const userData = await axios.get('https://flavoice.shop/accounts/user');
-      console.log(`user 정보 ${JSON.stringify(userData)}`);
-      localStorage.setItem('token', accessToken);
       setTimeout(
         () => onSilentRefresh(refreshToken),
         JWT_ACCESS_EXPIRY_TIME - 60000
-      ); //()=>{}랑 onSilentRefesh() 차이 확인필요
-      history.push('/');
+      );
+      history.push('/recorder');
     } catch (e) {
       console.log(e);
     }
