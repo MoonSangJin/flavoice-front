@@ -64,7 +64,7 @@ const SignInContainer = () => {
         () => onSilentRefresh(refreshToken),
         JWT_ACCESS_EXPIRY_TIME - 60000
       );
-      history.push('/recorder');
+      history.push('/displayResult');
     } catch (e) {
       console.log(e);
     }
