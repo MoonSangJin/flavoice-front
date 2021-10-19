@@ -82,7 +82,6 @@ const RecorderContainer = () => {
         processor.connect(context.destination);
 
         processor.onaudioprocess = function (e) {
-          console.log(stopped.current);
           if (0 < stopped.current) {
             console.log('onaudioprocess 종료');
             console.log('상태', status);
@@ -147,6 +146,27 @@ const RecorderContainer = () => {
     console.log('맥스', maxPitch.current);
   };
 
+  const onPitchPost = async (e) => {
+    e.preventDefault();
+
+    try {
+      const accsess_token = localStorage.getItem('token');
+      axios.defaults.headers.common[
+        'Authorization'
+      ] = `Bearer ${accsess_token}`;
+
+      const result = await axios.post('https://flavoice.shop/api/v1/voices/', {
+        max_pitch: '10',
+        min_pitch: '09',
+      });
+
+      alert('음표값 보내기');
+      console.log(result);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <div>
       <RecorderPresenter
@@ -154,6 +174,7 @@ const RecorderContainer = () => {
         {...{ mediaBlobUrl }}
         {...{ onStart }}
         {...{ onStop }}
+        {...{ onPitchPost }}
       />
     </div>
   );

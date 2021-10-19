@@ -35,7 +35,13 @@ const Container = styled.div`
   display: flex;
 `;
 
-const RecorderPresenter = ({ status, onStart, onStop, mediaBlobUrl }) => {
+const RecorderPresenter = ({
+  status,
+  onStart,
+  onStop,
+  mediaBlobUrl,
+  onPitchPost,
+}) => {
   return (
     <>
       <Link to="/">
@@ -87,7 +93,9 @@ const RecorderPresenter = ({ status, onStart, onStop, mediaBlobUrl }) => {
           <video style={{ visibility: 'hidden' }} controls />
         )}
         <Padding height={32} />
-        <StyledButton style={{ width: '65%' }}>녹음한 파일보내기</StyledButton>
+        <StyledButton onClick={onPitchPost} style={{ width: '65%' }}>
+          녹음한 파일보내기
+        </StyledButton>
       </Form>
     </>
   );
