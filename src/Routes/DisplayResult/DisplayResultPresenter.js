@@ -1,57 +1,66 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Pagination } from 'swiper';
 import 'swiper/swiper-bundle.min.css';
 import 'swiper/swiper.min.css';
 import './styles.css';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import BackButton from '../../Components/BackButton';
 
 SwiperCore.use([Pagination]);
 
 const DisplayResultPresenter = () => {
+  const [songs, setSongs] = useState([]);
+
+  const songApi = async () => {
+    try {
+      const accsess_token = localStorage.getItem('token');
+      axios.defaults.headers.common[
+        'Authorization'
+      ] = `Bearer ${accsess_token}`;
+
+      const songs = await axios.get('https://flavoice.shop/api/v1/songs/me/');
+
+      console.log('api 데이터', songs.data);
+      setSongs(songs.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    songApi();
+  }, []);
+
   return (
-    <Swiper
-      pagination={{
-        dynamicBullets: true,
-      }}
-      className="mySwiper"
-    >
-      <SwiperSlide>
-        <img src={require('../../img/sample1.jpg').default} />
-        <Singer>가수이름1</Singer>
-        <Title>앨범 제목1</Title>
-        <Text>노래 음역대, 한줄 설명</Text>
-        <WhiteBlank />
-      </SwiperSlide>
-      <SwiperSlide>
-        <img src={require('../../img/sample2.jpg').default} />
-        <Singer>가수이름2</Singer>
-        <Title>앨범 제목2</Title>
-        <Text>노래 음역대, 한줄 설명</Text>
-        <WhiteBlank />
-      </SwiperSlide>
-      <SwiperSlide>
-        <img src={require('../../img/sample3.jpg').default} />
-        <Singer>가수이름3</Singer>
-        <Title>앨범 제목3</Title>
-        <Text>노래 음역대, 한줄 설명</Text>
-        <WhiteBlank />
-      </SwiperSlide>
-      <SwiperSlide>
-        <img src={require('../../img/sample4.png').default} />
-        <Singer>가수이름4</Singer>
-        <Title>앨범 제목4</Title>
-        <Text>노래 음역대, 한줄 설명</Text>
-        <WhiteBlank />
-      </SwiperSlide>
-      <SwiperSlide>
-        <img src={require('../../img/sample5.jfif').default} />
-        <Singer>가수이름5</Singer>
-        <Title>앨범 제목5</Title>
-        <Text>노래 음역대, 한줄 설명</Text>
-        <WhiteBlank />
-      </SwiperSlide>
-    </Swiper>
+    <>
+      <Link to="/">
+        <BackButton />
+      </Link>
+      {!songs && <Text>로딩 중</Text>}
+      {songs && (
+        <Swiper
+          pagination={{
+            dynamicBullets: true,
+          }}
+          className="mySwiper"
+        >
+          {songs.map((song, idx) => {
+            return (
+              <SwiperSlide key={idx}>
+                <img src={require('../../img/sample2.jpg').default} />
+                <Singer>{song.singer[0].name}</Singer>
+                <Title>{song.title}</Title>
+                <Text>노래 음역대, 한줄 설명</Text>
+                <WhiteBlank />
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
+      )}
+    </>
   );
 };
 
