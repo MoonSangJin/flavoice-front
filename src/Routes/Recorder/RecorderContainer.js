@@ -3,8 +3,10 @@ import RecorderPresenter from './RecorderPresenter';
 import { useReactMediaRecorder } from 'react-media-recorder';
 import * as tf from '@tensorflow/tfjs';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 const RecorderContainer = () => {
+  const history = useHistory();
   const { status, startRecording, stopRecording, mediaBlobUrl } =
     useReactMediaRecorder({ video: true });
   const [start, setStart] = useState(false);
@@ -138,16 +140,30 @@ const RecorderContainer = () => {
   };
 
   const onStop = () => {
+    if (maxPitch.current === -1) {
+      let con_test = window.confirm(
+        '아직 데이터 분석중입니다. 조금 더 길게 녹음하시겠나요?'
+      );
+      if (con_test === true) {
+        return;
+      }
+    }
+
     stopRecording();
     setStart(false);
     stop.current = true;
-    stopped.current += 1;
+    stopped.current += 5;
+
     console.log('종료 cnt', stopped.current);
     console.log('맥스', maxPitch.current);
   };
 
   const onPitchPost = async (e) => {
     e.preventDefault();
+    if (maxPitch.current === -1) {
+      alert('아직 층분히 녹음되지 않았습니다. 다시 녹음해주세요!');
+      return;
+    }
 
     try {
       const accsess_token = localStorage.getItem('token');
@@ -156,12 +172,12 @@ const RecorderContainer = () => {
       ] = `Bearer ${accsess_token}`;
 
       const result = await axios.post('https://flavoice.shop/api/v1/voices/', {
-        max_pitch: '10',
-        min_pitch: '09',
+        max_pitch: String(parseInt(maxPitch.current)),
       });
 
-      alert('음표값 보내기');
+      alert('음표 추출에 성공했습니다.');
       console.log(result);
+      history.push('/displayResult');
     } catch (e) {
       console.log(e);
     }
