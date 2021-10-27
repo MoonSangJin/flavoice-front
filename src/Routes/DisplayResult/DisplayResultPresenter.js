@@ -39,7 +39,7 @@ const DisplayResultPresenter = () => {
       <Link to="/">
         <BackButton />
       </Link>
-      {!songs && <Text>로딩 중</Text>}
+      {!songs.length && <Text>로딩 중</Text>}
       {songs && (
         <Swiper
           pagination={{
