@@ -51,7 +51,7 @@ const RecorderPresenter = ({
           {isStarted === 0 && !isReady && (
             <>
               <Text>분석할 목소리가 없습니다.</Text>
-              <Text>목소리를 녹음해 주세요!</Text>
+              <Text>목소리를 녹음해 주세요! 🤗</Text>
             </>
           )}
           {isStarted !== 0 && !isReady && !isStopped && (
@@ -72,7 +72,7 @@ const RecorderPresenter = ({
           {isStarted !== 0 && !isReady && isStopped && (
             <>
               <Text>녹음이 완료됐습니다.</Text>
-              <Text>당신에게 맞는 노래는?</Text>
+              <Text>당신에게 맞는 노래는? 🤩</Text>
             </>
           )}
           <Padding height={64} />
