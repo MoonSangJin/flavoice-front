@@ -6,6 +6,7 @@ import SignUp from '../Routes/SignUp';
 import Recorder from '../Routes/Recorder';
 import DisplayComponents from '../Routes/DisplayComponents';
 import DisplayResult from '../Routes/DisplayResult';
+import Guide from '../Routes/Guide';
 
 export default () => (
   <Router>
@@ -15,5 +16,6 @@ export default () => (
     <Route path="/displayComponents" exact component={DisplayComponents} />
     <Route path="/displayResult" exact component={DisplayResult} />
     <Route path="/home" exact component={Home} />
+    <Route path="/guide" exact component={Guide} />
   </Router>
 );

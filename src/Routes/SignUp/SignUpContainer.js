@@ -24,8 +24,9 @@ const SignUpContainer = () => {
     try {
       await axios.post('https://flavoice.shop/accounts/registration/', values);
       alert('회원가입이 완료되었습니다. 이메일을 확인해주세요');
-      history.push('/signin');
+      history.push('/');
     } catch (e) {
+      alert('회원가입 오류! 필드 값을 확인해주세요');
       console.log(e);
     }
   };
