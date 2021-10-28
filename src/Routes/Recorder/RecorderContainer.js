@@ -141,14 +141,12 @@ const RecorderContainer = () => {
   };
 
   const handleSubmit = async (e) => {
-    console.log('start', isStarted);
-    console.log('ready', isReady);
-
     if (maxPitch.current === -1) {
       alert('아직 층분히 녹음되지 않았습니다. 다시 녹음해주세요!');
       return;
     }
 
+    localStorage.setItem('pitch', maxPitch.current);
     alert('음표 추출에 성공했습니다!');
     history.push('/displayResult');
   };
