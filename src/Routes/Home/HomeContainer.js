@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import HomePresenter from './HomePresenter';
+import checkLogin from '../../util/checkLogin';
 
 const HomeContainer = () => {
+  const [loginChecker, setLoginChecker] = useState(false);
+
+  useEffect(() => {
+    if (checkLogin()) {
+      setLoginChecker(true);
+    }
+  }, []);
+
   return (
     <div>
-      <HomePresenter />
+      <HomePresenter {...{ loginChecker }} />
     </div>
   );
 };

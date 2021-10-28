@@ -9,11 +9,11 @@ import DisplayResult from '../Routes/DisplayResult';
 
 export default () => (
   <Router>
-    <Route path="/" exact component={Home} />
-    <Route path="/signin" exact component={SignIn} />
+    <Route path="/" exact component={SignIn} />
     <Route path="/signup" exact component={SignUp} />
     <Route path="/recorder" exact component={Recorder} />
     <Route path="/displayComponents" exact component={DisplayComponents} />
     <Route path="/displayResult" exact component={DisplayResult} />
+    <Route path="/home" exact component={Home} />
   </Router>
 );

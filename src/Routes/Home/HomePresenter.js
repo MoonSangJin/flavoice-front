@@ -6,26 +6,25 @@ import Text from '../../Components/Text';
 import Button from '../../Components/Button';
 import Logo from '../../logo.png';
 
-const HomePresenter = () => {
+const HomePresenter = ({ loginChecker }) => {
   return (
     <>
       <Form style={{ display: 'flex', alignItems: 'center' }}>
         <img src={Logo} style={{ marginBottom: '30px' }} />
-        <Link to="/signin">
-          <Button content={'Sign In'} />
-        </Link>
-        <Link to="/signup">
-          <Button content={'Sign Up'} />
-        </Link>
+        {!loginChecker && (
+          <Link to="/">
+            <Button content={'Sign In'} />
+          </Link>
+        )}
         <Link to="/recorder">
           <Button content={'Recorder'} />
-        </Link>
-        <Link to="/displayComponents">
-          <Button content={'Display Components'} />
         </Link>
         <Link to="/displayResult">
           <Button content={'Display Result'} />
         </Link>
+        {/* <Link to="/displayComponents">
+          <Button content={'Display Components'} />
+        </Link> */}
       </Form>
     </>
   );
