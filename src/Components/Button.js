@@ -3,13 +3,13 @@ import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const StyledButton = styled.button`
-  background: #1aab8a;
+  background: #4aa8d8;
   color: #fff;
   border: none;
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
   position: relative;
-  font-size: 1.6em;
+  font-size: ${({ fontSize }) => fontSize}em;
   padding: 0 2em;
   cursor: pointer;
   transition: 800ms ease all;
@@ -18,7 +18,7 @@ const StyledButton = styled.button`
 
   &:hover {
     background: #fff;
-    color: #1aab8a;
+    color: #4aa8d8;
     ::before,
     ::after {
       width: 100%;
@@ -33,7 +33,7 @@ const StyledButton = styled.button`
     right: 0;
     height: 2px;
     width: 0;
-    background: #1aab8a;
+    background: #4aa8d8;
     transition: 400ms ease all;
   }
   ::after {
@@ -44,8 +44,18 @@ const StyledButton = styled.button`
   }
 `;
 
-const Button = ({ content, width = 350, height = 80 }) => {
-  return <StyledButton {...{ width, height }}>{content}</StyledButton>;
+const Button = ({
+  content,
+  width = 280,
+  height = 60,
+  fontSize = 1.6,
+  onClick,
+}) => {
+  return (
+    <StyledButton onClick={onClick} {...{ width, height, fontSize }}>
+      {content}
+    </StyledButton>
+  );
 };
 
 export default Button;

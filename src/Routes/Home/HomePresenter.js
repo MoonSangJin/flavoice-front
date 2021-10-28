@@ -12,6 +12,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import SettingVoicesIcon from '@mui/icons-material/SettingsVoice';
 import Paper from '@mui/material/Paper';
+import MenuBookTwoToneIcon from '@mui/icons-material/MenuBookTwoTone';
 
 const HomePresenter = ({ loginChecker }) => {
   const history = useHistory();
@@ -19,7 +20,11 @@ const HomePresenter = ({ loginChecker }) => {
   const moveTo = (target) => {
     history.push(`${target}`);
   };
-
+  const handleLogOut = () => {
+    console.log('hi');
+    localStorage.clear();
+    history.push('/');
+  };
   return (
     <>
       <Form style={{ display: 'flex', alignItems: 'center' }}>
@@ -38,6 +43,8 @@ const HomePresenter = ({ loginChecker }) => {
         {/* <Link to="/displayComponents">
           <Button content={'Display Components'} />
         </Link> */}
+        <Button content={'Tech Stack'} />
+        {loginChecker && <Button content={'LogOut'} onClick={handleLogOut} />}
       </Form>
       <Paper
         sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
@@ -45,9 +52,9 @@ const HomePresenter = ({ loginChecker }) => {
       >
         <BottomNavigation showLabels>
           <BottomNavigationAction
-            label="Home"
-            icon={<HomeIcon />}
-            onClick={() => moveTo('/')}
+            label="Guide"
+            icon={<MenuBookTwoToneIcon />}
+            onClick={() => moveTo('/guide')}
           />
           <BottomNavigationAction
             label="Recorder"

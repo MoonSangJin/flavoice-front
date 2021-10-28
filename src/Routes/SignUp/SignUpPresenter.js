@@ -26,7 +26,7 @@ const SignUpPresenter = ({ handleChange, handleSubmit }) => {
         <TextField
           required
           id="filled-required"
-          label="password"
+          label="password (8 or more characters)"
           onChange={handleChange('password1')}
           margin="dense"
           type="password"

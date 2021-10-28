@@ -57,12 +57,11 @@ const SignInContainer = () => {
       () => onSilentRefresh(localStorage.getItem('refreshToken')),
       JWT_ACCESS_EXPIRY_TIME - 60000
     );
-    history.push('/home');
+    history.push('/guide');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(values);
 
     try {
       const result = await axios.post(
@@ -71,6 +70,9 @@ const SignInContainer = () => {
       );
       loginSuccess(result);
     } catch (e) {
+      alert(
+        '로그인에 오류가 생겼습니다. 이메일과 비밀번호를 다시 확인해주세요'
+      );
       console.log(e);
     }
   };

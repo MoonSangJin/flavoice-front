@@ -14,9 +14,6 @@ const SignInPresenter = ({ handleChange, handleSubmit }) => {
   };
   return (
     <>
-      <Link to="/">
-        <BackButton />
-      </Link>
       <LogoRow>
         <img src={Logo} alt={'logo'} />
       </LogoRow>
