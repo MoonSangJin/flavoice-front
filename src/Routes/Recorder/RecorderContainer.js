@@ -1,39 +1,35 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import RecorderPresenter from './RecorderPresenter';
-import { useReactMediaRecorder } from 'react-media-recorder';
+
 import * as tf from '@tensorflow/tfjs';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import { max } from '@tensorflow/tfjs';
 
 const RecorderContainer = () => {
-  const history = useHistory();
-  const { status, startRecording, stopRecording, mediaBlobUrl } =
-    useReactMediaRecorder({ video: true });
-  const [start, setStart] = useState(false);
+  const [isStarted, setIsStarted] = useState(0);
+  const [isReady, setIsReady] = useState(false);
+  const [isStopped, setIsStopped] = useState(true);
+  const [isRestarted, setIsRestarted] = useState(true);
 
+  const history = useHistory();
   const mounted = useRef(false);
   const maxPitch = useRef(-1);
-  const stop = useRef(true);
-  const stopped = useRef(0);
+  const stopping = useRef(0);
 
+  //종료를 위한 부분.
   useEffect(() => {
-    console.log(status);
-    if (status === 'stopped') {
-      stopped.current++;
-    }
-  }, [status]);
+    return () => {
+      stopping.current += 5;
+      window.location.reload();
+    };
+  }, []);
 
+  // start가 증가할 때 마다 녹음이 시작된다. bool타입으로 구현이 힘들어서 int로 함.
   useEffect(() => {
     if (!mounted.current) {
       mounted.current = true;
-    } else if (status === 'recording') {
-      const check = () => {
-        if (start === false) {
-          console.log('useEffect 종료');
-          return false;
-        } else return true;
-      };
-
+    } else {
       const script = document.createElement('script');
       script.src =
         'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.2.9/dist/tf.min.js';
@@ -48,7 +44,7 @@ const RecorderContainer = () => {
       const MODEL_URL = 'https://tfhub.dev/google/tfjs-model/spice/2/default/1';
       let model;
 
-      async function startDemo() {
+      async function startRecoding() {
         console.log('음표추출 시작');
         maxPitch.current = -1;
         model = await tf.loadGraphModel(MODEL_URL, { fromTFHub: true });
@@ -84,17 +80,20 @@ const RecorderContainer = () => {
         processor.connect(context.destination);
 
         processor.onaudioprocess = function (e) {
-          if (0 < stopped.current) {
+          // 종료하는 시점.
+          if (0 < stopping.current) {
             console.log('onaudioprocess 종료');
-            console.log('상태', status);
-            if (
-              source.connect(processor) &&
-              processor.connect(context.destination)
-            ) {
-              source.disconnect(processor);
-              processor.disconnect(context.destination);
+            for (let i = 0; i < 50; i++) {
+              if (
+                source.connect(processor) &&
+                processor.connect(context.destination)
+              ) {
+                source.disconnect(processor);
+                processor.disconnect(context.destination);
+              }
             }
-            stopped.current = 0;
+            setIsReady(false);
+            stopping.current = 0;
             return;
           }
 
@@ -110,82 +109,68 @@ const RecorderContainer = () => {
               continue;
             }
             let pitch = getPitchHz(pitches[i]);
-            console.log(status, stop.current);
             console.log(pitch);
+
+            // 음표분석이 시작되는 시점에 준비 끝.
             if (pitch > maxPitch.current) {
+              setIsReady(true);
+              setIsRestarted(false);
+              setIsStopped(false);
               maxPitch.current = pitch;
               console.log(maxPitch.current);
             }
           }
         };
       }
-
-      if (check()) {
-        startDemo();
-      }
+      startRecoding();
     }
-  }, [start, status]);
-
-  useEffect(() => {
-    return () => {
-      window.location.reload();
-    };
-  }, []);
+  }, [isStarted]);
 
   const onStart = () => {
-    startRecording();
-    setStart(true);
-    stop.current = false;
-    stopped.current = 0;
+    setIsStarted(isStarted + 1);
+    setIsStopped(false);
+    stopping.current = 0;
   };
 
   const onStop = () => {
-    if (maxPitch.current === -1) {
-      let con_test = window.confirm(
-        '아직 데이터 분석중입니다. 조금 더 길게 녹음하시겠나요?'
-      );
-      if (con_test === true) {
-        return;
-      }
-    }
-
-    stopRecording();
-    setStart(false);
-    stop.current = true;
-    stopped.current += 5;
-
-    console.log('종료 cnt', stopped.current);
+    stopping.current += 5;
+    console.log('종료 cnt', stopping.current);
     console.log('맥스', maxPitch.current);
+    setIsRestarted(false);
+    setIsStopped(true);
   };
 
-  const onPitchPost = async (e) => {
-    e.preventDefault();
-    if (maxPitch.current === -1) {
-      alert('아직 층분히 녹음되지 않았습니다. 다시 녹음해주세요!');
-      return;
-    }
+  const handleSubmit = async (e) => {
+    console.log('start', isStarted);
+    console.log('ready', isReady);
 
-    try {
-      const result = await axios.post('https://flavoice.shop/api/v1/voices/', {
-        max_pitch: String(parseInt(maxPitch.current)),
-      });
-
-      alert('음표 추출에 성공했습니다.');
-      console.log(result);
-      history.push('/displayResult');
-    } catch (e) {
-      console.log(e);
-    }
+    // e.preventDefault();
+    // if (maxPitch.current === -1) {
+    //   alert('아직 층분히 녹음되지 않았습니다. 다시 녹음해주세요!');
+    //   return;
+    // }
+    // try {
+    //   const result = await axios.post('https://flavoice.shop/api/v1/voices/', {
+    //     max_pitch: String(parseInt(maxPitch.current)),
+    //   });
+    //   alert('음표 추출에 성공했습니다.');
+    //   console.log(result);
+    //   history.push('/displayResult');
+    // } catch (e) {
+    //   console.log(e);
+    // }
   };
 
   return (
     <div>
       <RecorderPresenter
-        {...{ status }}
-        {...{ mediaBlobUrl }}
         {...{ onStart }}
         {...{ onStop }}
-        {...{ onPitchPost }}
+        {...{ handleSubmit }}
+        {...{ isStarted }}
+        {...{ isReady }}
+        {...{ isStopped }}
+        {...{ isRestarted }}
       />
     </div>
   );
