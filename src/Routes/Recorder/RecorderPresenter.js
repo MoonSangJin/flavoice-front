@@ -56,7 +56,7 @@ const RecorderPresenter = ({
           )}
           {isStarted !== 0 && !isReady && !isStopped && (
             <>
-              <Text>잠시만 기다려주세요.</Text>
+              <Text>잠시만 기다려주세요. 😔</Text>
               <Box sx={{ width: '80%' }}>
                 <LinearProgress />
               </Box>
@@ -65,7 +65,7 @@ const RecorderPresenter = ({
           {isStarted !== 0 && isReady && (
             <>
               <Text>목소리를 분석 중입니다.</Text>
-              <Text>조용한 공간에서 해주세요!</Text>
+              <Text>조용한 공간에서 해주세요! 😎</Text>
               <Text fontSize={64}>🎤</Text>
             </>
           )}

@@ -144,21 +144,13 @@ const RecorderContainer = () => {
     console.log('start', isStarted);
     console.log('ready', isReady);
 
-    // e.preventDefault();
-    // if (maxPitch.current === -1) {
-    //   alert('아직 층분히 녹음되지 않았습니다. 다시 녹음해주세요!');
-    //   return;
-    // }
-    // try {
-    //   const result = await axios.post('https://flavoice.shop/api/v1/voices/', {
-    //     max_pitch: String(parseInt(maxPitch.current)),
-    //   });
-    //   alert('음표 추출에 성공했습니다.');
-    //   console.log(result);
-    //   history.push('/displayResult');
-    // } catch (e) {
-    //   console.log(e);
-    // }
+    if (maxPitch.current === -1) {
+      alert('아직 층분히 녹음되지 않았습니다. 다시 녹음해주세요!');
+      return;
+    }
+
+    alert('음표 추출에 성공했습니다!');
+    history.push('/displayResult');
   };
 
   return (
