@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import BackButton from '../../Components/BackButton';
+import { useHistory } from 'react-router-dom';
 import Text from '../../Components/Text';
 import Form from '../../Components/Form';
 import styled, { css } from 'styled-components';
@@ -9,16 +8,17 @@ import Padding from '../../Components/Padding';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import HomeIcon from '@mui/icons-material/Home';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import SettingVoicesIcon from '@mui/icons-material/SettingsVoice';
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
 import Paper from '@mui/material/Paper';
 
 const RecorderPresenter = ({
-  status,
+  isStarted,
   onStart,
   onStop,
-  mediaBlobUrl,
-  onPitchPost,
+  handleSubmit,
+  isReady,
+  isStopped,
 }) => {
   const history = useHistory();
 
@@ -29,52 +29,56 @@ const RecorderPresenter = ({
   return (
     <>
       <Form style={{ alignItems: 'center' }}>
-        <Padding height={32} />
-        {status === 'recording' ? (
-          <Text>녹음 중</Text>
-        ) : status === 'stopped' ? (
-          <Text>녹음 끝</Text>
-        ) : status === 'acquiring_media' ? (
-          <Text>잠시 기다려 주세요.</Text>
-        ) : (
-          <Text style={{ visibility: 'hidden' }}>녹음 </Text>
-        )}
-        <Padding height={32} />
+        <Padding height={64} />
         <Container>
-          {status === 'acquiring_media' ? (
+          <StyledButton onClick={onStart} style={{ marginRight: '10px' }}>
+            녹음 시작
+          </StyledButton>
+          <StyledButton onClick={onStop}>녹음 종료</StyledButton>
+        </Container>
+        <LinearProgress />
+        <Form
+          style={{
+            justifyContent: 'space-evenly',
+            alignItems: 'center',
+            height: '300px',
+            width: '80%',
+            padding: '0px',
+            margin: '0px',
+          }}
+        >
+          <Padding height={64} />
+          {isStarted === 0 && !isReady && (
             <>
-              <StyledButton style={{ marginRight: '10px' }}>
-                녹음 시작
-              </StyledButton>
-              <StyledButton onClick={onStop}>녹음 종료</StyledButton>
-            </>
-          ) : (
-            <>
-              <StyledButton
-                onClick={onStart}
-                style={{ marginRight: '10px' }}
-                active={status === 'recording'}
-              >
-                녹음 시작
-              </StyledButton>
-              <StyledButton onClick={onStop} active={status === 'stopped'}>
-                녹음 종료
-              </StyledButton>
+              <Text>분석할 목소리가 없습니다.</Text>
+              <Text>목소리를 녹음해 주세요!</Text>
             </>
           )}
-        </Container>
-        <Padding />
-        {status === 'stopped' ? (
-          <audio
-            src={mediaBlobUrl}
-            style={{ width: '400px', height: '100px' }}
-            controls
-          />
-        ) : (
-          <video style={{ visibility: 'hidden' }} controls />
-        )}
-        <Padding height={32} />
-        <StyledButton onClick={onPitchPost} style={{ width: '65%' }}>
+          {isStarted !== 0 && !isReady && !isStopped && (
+            <>
+              <Text>잠시만 기다려주세요.</Text>
+              <Box sx={{ width: '80%' }}>
+                <LinearProgress />
+              </Box>
+            </>
+          )}
+          {isStarted !== 0 && isReady && (
+            <>
+              <Text>목소리를 분석 중입니다.</Text>
+              <Text>조용한 공간에서 해주세요!</Text>
+              <Text fontSize={64}>🎤</Text>
+            </>
+          )}
+          {isStarted !== 0 && !isReady && isStopped && (
+            <>
+              <Text>녹음이 완료됐습니다.</Text>
+              <Text>당신에게 맞는 노래는?</Text>
+            </>
+          )}
+          <Padding height={64} />
+        </Form>
+
+        <StyledButton onClick={handleSubmit} style={{ width: '65%' }}>
           녹음한 파일보내기
         </StyledButton>
       </Form>
@@ -98,8 +102,8 @@ const StyledButton = styled.button`
   color: ${palette.white};
   background-color: ${palette.clude};
   border: none;
-  width: 145px;
-  height: 60px;
+  width: 170px;
+  height: 70px;
   border-radius: 20px;
   text-align: center;
   text-decoration: none;
@@ -110,13 +114,17 @@ const StyledButton = styled.button`
   }
 
   ${(props) =>
-    props.active &&
+    props.disabled &&
     css`
-      background-color: ${palette.gray[100]};
-      color: ${palette.gray[200]};
-      font-weight: 800;
+      background-color: ${palette.gray[200]};
+
+      &:hover {
+        font-weight: 500;
+      }
     `};
 `;
+
+const Wrapper = styled.div``;
 
 const Container = styled.div`
   display: flex;
