@@ -14,6 +14,8 @@ import HomeIcon from '@mui/icons-material/Home';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import SettingVoicesIcon from '@mui/icons-material/SettingsVoice';
 import Paper from '@mui/material/Paper';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 SwiperCore.use([Pagination]);
 
@@ -26,7 +28,11 @@ const DisplayResultPresenter = ({ songs }) => {
 
   return (
     <>
-      {!songs.length && <Text>로딩 중</Text>}
+      {!songs.length && (
+        <CircularProgress
+          style={{ position: 'fixed', left: '50%', top: '40%' }}
+        />
+      )}
       {songs && (
         <Swiper
           pagination={{

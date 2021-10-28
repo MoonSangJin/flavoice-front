@@ -38,29 +38,29 @@ const HomePresenter = ({ loginChecker }) => {
         {/* <Link to="/displayComponents">
           <Button content={'Display Components'} />
         </Link> */}
-        <Paper
-          sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
-          elevation={3}
-        >
-          <BottomNavigation showLabels>
-            <BottomNavigationAction
-              label="Home"
-              icon={<HomeIcon />}
-              onClick={() => moveTo('/')}
-            />
-            <BottomNavigationAction
-              label="Recorder"
-              icon={<SettingVoicesIcon />}
-              onClick={() => moveTo('/recorder')}
-            />
-            <BottomNavigationAction
-              label="My Song"
-              icon={<FavoriteIcon />}
-              onClick={() => moveTo('/displayResult')}
-            />
-          </BottomNavigation>
-        </Paper>
       </Form>
+      <Paper
+        sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
+        elevation={3}
+      >
+        <BottomNavigation showLabels>
+          <BottomNavigationAction
+            label="Home"
+            icon={<HomeIcon />}
+            onClick={() => moveTo('/')}
+          />
+          <BottomNavigationAction
+            label="Recorder"
+            icon={<SettingVoicesIcon />}
+            onClick={() => moveTo('/recorder')}
+          />
+          <BottomNavigationAction
+            label="My Song"
+            icon={<FavoriteIcon />}
+            onClick={() => moveTo('/displayResult')}
+          />
+        </BottomNavigation>
+      </Paper>
     </>
   );
 };

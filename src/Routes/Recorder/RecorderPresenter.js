@@ -1,39 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import BackButton from '../../Components/BackButton';
 import Text from '../../Components/Text';
 import Form from '../../Components/Form';
 import styled, { css } from 'styled-components';
 import palette from '../../lib/styles/paletts';
 import Padding from '../../Components/Padding';
-
-const StyledButton = styled.button`
-  color: ${palette.white};
-  background-color: ${palette.clude};
-  border: none;
-  width: 145px;
-  height: 60px;
-  border-radius: 20px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 1.6rem;
-  font-weight: 500;
-  &:hover {
-    font-weight: 700;
-  }
-
-  ${(props) =>
-    props.active &&
-    css`
-      background-color: ${palette.gray[100]};
-      color: ${palette.gray[200]};
-      font-weight: 800;
-    `};
-`;
-
-const Container = styled.div`
-  display: flex;
-`;
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import HomeIcon from '@mui/icons-material/Home';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import SettingVoicesIcon from '@mui/icons-material/SettingsVoice';
+import Paper from '@mui/material/Paper';
 
 const RecorderPresenter = ({
   status,
@@ -42,11 +20,14 @@ const RecorderPresenter = ({
   mediaBlobUrl,
   onPitchPost,
 }) => {
+  const history = useHistory();
+
+  const moveTo = (target) => {
+    history.push(`${target}`);
+  };
+
   return (
     <>
-      <Link to="/">
-        <BackButton />
-      </Link>
       <Form style={{ alignItems: 'center' }}>
         <Padding height={32} />
         {status === 'recording' ? (
@@ -97,8 +78,58 @@ const RecorderPresenter = ({
           녹음한 파일보내기
         </StyledButton>
       </Form>
+      <Paper
+        sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
+        elevation={3}
+      >
+        <BottomNavigation showLabels>
+          <BottomNavigationAction
+            label="Home"
+            icon={<HomeIcon />}
+            onClick={() => moveTo('/')}
+          />
+          <BottomNavigationAction
+            label="Recorder"
+            icon={<SettingVoicesIcon />}
+            onClick={() => moveTo('/recorder')}
+          />
+          <BottomNavigationAction
+            label="My Song"
+            icon={<FavoriteIcon />}
+            onClick={() => moveTo('/displayResult')}
+          />
+        </BottomNavigation>
+      </Paper>
     </>
   );
 };
+
+const StyledButton = styled.button`
+  color: ${palette.white};
+  background-color: ${palette.clude};
+  border: none;
+  width: 145px;
+  height: 60px;
+  border-radius: 20px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1.6rem;
+  font-weight: 500;
+  &:hover {
+    font-weight: 700;
+  }
+
+  ${(props) =>
+    props.active &&
+    css`
+      background-color: ${palette.gray[100]};
+      color: ${palette.gray[200]};
+      font-weight: 800;
+    `};
+`;
+
+const Container = styled.div`
+  display: flex;
+`;
 
 export default RecorderPresenter;
