@@ -88,16 +88,6 @@ const RecorderPresenter = ({
             icon={<HomeIcon />}
             onClick={() => moveTo('/')}
           />
-          <BottomNavigationAction
-            label="Recorder"
-            icon={<SettingVoicesIcon />}
-            onClick={() => moveTo('/recorder')}
-          />
-          <BottomNavigationAction
-            label="My Song"
-            icon={<FavoriteIcon />}
-            onClick={() => moveTo('/displayResult')}
-          />
         </BottomNavigation>
       </Paper>
     </>
