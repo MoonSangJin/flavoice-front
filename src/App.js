@@ -14,7 +14,7 @@ const App = () => {
         console.log('access token과 refresh access 달라서 ACCESS 갱신되었음');
         axios.defaults.headers.common[
           'Authorization'
-        ] = `Bearer ${refreshAccessToken}}`;
+        ] = `Bearer ${refreshAccessToken}`;
         localStorage.setItem('token', refreshAccessToken);
       }
     } catch (e) {

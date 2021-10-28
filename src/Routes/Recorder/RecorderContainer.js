@@ -166,11 +166,6 @@ const RecorderContainer = () => {
     }
 
     try {
-      const accsess_token = localStorage.getItem('token');
-      axios.defaults.headers.common[
-        'Authorization'
-      ] = `Bearer ${accsess_token}`;
-
       const result = await axios.post('https://flavoice.shop/api/v1/voices/', {
         max_pitch: String(parseInt(maxPitch.current)),
       });

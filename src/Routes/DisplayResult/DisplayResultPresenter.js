@@ -1,44 +1,31 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Pagination } from 'swiper';
 import 'swiper/swiper-bundle.min.css';
 import 'swiper/swiper.min.css';
 import './styles.css';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import BackButton from '../../Components/BackButton';
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import HomeIcon from '@mui/icons-material/Home';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import SettingVoicesIcon from '@mui/icons-material/SettingsVoice';
+import Paper from '@mui/material/Paper';
 
 SwiperCore.use([Pagination]);
 
-const DisplayResultPresenter = () => {
-  const [songs, setSongs] = useState([]);
+const DisplayResultPresenter = ({ songs }) => {
+  const history = useHistory();
 
-  const songApi = async () => {
-    try {
-      const accsess_token = localStorage.getItem('token');
-      axios.defaults.headers.common[
-        'Authorization'
-      ] = `Bearer ${accsess_token}`;
-
-      const songs = await axios.get('https://flavoice.shop/api/v1/songs/me/');
-
-      console.log('api 데이터', songs.data);
-      setSongs(songs.data);
-    } catch (e) {
-      console.log(e);
-    }
+  const moveTo = (target) => {
+    history.push(`${target}`);
   };
-
-  useEffect(() => {
-    songApi();
-  }, []);
 
   return (
     <>
-      <Link to="/">
-        <BackButton />
-      </Link>
       {!songs.length && <Text>로딩 중</Text>}
       {songs && (
         <Swiper
@@ -60,6 +47,28 @@ const DisplayResultPresenter = () => {
           })}
         </Swiper>
       )}
+      <Paper
+        sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
+        elevation={3}
+      >
+        <BottomNavigation showLabels>
+          <BottomNavigationAction
+            label="Home"
+            icon={<HomeIcon />}
+            onClick={() => moveTo('/')}
+          />
+          <BottomNavigationAction
+            label="Recorder"
+            icon={<SettingVoicesIcon />}
+            onClick={() => moveTo('/recorder')}
+          />
+          <BottomNavigationAction
+            label="My Song"
+            icon={<FavoriteIcon />}
+            onClick={() => moveTo('/displayResult')}
+          />
+        </BottomNavigation>
+      </Paper>
     </>
   );
 };

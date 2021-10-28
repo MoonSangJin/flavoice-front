@@ -48,7 +48,7 @@ const SignInContainer = () => {
     const { data } = result;
     const accessToken = data['access_token'];
     const refreshToken = data['refresh_token']; //ToDo refreshToken 활용방안 : 유효시간 따라 다르게
-    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}}`;
+    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     localStorage.setItem('token', accessToken);
     localStorage.setItem('refreshToken', refreshToken);
 

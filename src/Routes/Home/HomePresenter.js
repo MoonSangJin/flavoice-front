@@ -1,12 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import Form from '../../Components/Form';
 import Text from '../../Components/Text';
 import Button from '../../Components/Button';
 import Logo from '../../logo.png';
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import HomeIcon from '@mui/icons-material/Home';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import SettingVoicesIcon from '@mui/icons-material/SettingsVoice';
+import Paper from '@mui/material/Paper';
 
 const HomePresenter = ({ loginChecker }) => {
+  const history = useHistory();
+
+  const moveTo = (target) => {
+    history.push(`${target}`);
+  };
+
   return (
     <>
       <Form style={{ display: 'flex', alignItems: 'center' }}>
@@ -25,6 +38,28 @@ const HomePresenter = ({ loginChecker }) => {
         {/* <Link to="/displayComponents">
           <Button content={'Display Components'} />
         </Link> */}
+        <Paper
+          sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
+          elevation={3}
+        >
+          <BottomNavigation showLabels>
+            <BottomNavigationAction
+              label="Home"
+              icon={<HomeIcon />}
+              onClick={() => moveTo('/')}
+            />
+            <BottomNavigationAction
+              label="Recorder"
+              icon={<SettingVoicesIcon />}
+              onClick={() => moveTo('/recorder')}
+            />
+            <BottomNavigationAction
+              label="My Song"
+              icon={<FavoriteIcon />}
+              onClick={() => moveTo('/displayResult')}
+            />
+          </BottomNavigation>
+        </Paper>
       </Form>
     </>
   );
