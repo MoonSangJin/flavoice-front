@@ -167,7 +167,7 @@ const RecorderContainer = () => {
     if (myPitch !== maxPitch.current) setMyPitch(maxPitch.current);
 
     localStorage.setItem('pitch', myPitch);
-    alert('음표 추출에 성공했습니다!');
+    alert(`음표 추출에 성공했습니다!${myPitch}`);
     history.push('/displayResult');
   };
 
