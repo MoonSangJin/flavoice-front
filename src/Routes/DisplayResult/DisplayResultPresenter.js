@@ -15,13 +15,12 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import SettingVoicesIcon from '@mui/icons-material/SettingsVoice';
 import Paper from '@mui/material/Paper';
 import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
+import imgSrcObject from '../../img/imgSrc';
 
 SwiperCore.use([Pagination]);
 
 const DisplayResultPresenter = ({ songs }) => {
   const history = useHistory();
-
   const moveTo = (target) => {
     history.push(`${target}`);
   };
@@ -45,8 +44,11 @@ const DisplayResultPresenter = ({ songs }) => {
               <SwiperSlide key={idx}>
                 <img
                   style={{ marginBottom: '10px' }}
-                  src={require('../../img/sample2.jpg').default}
+                  src={
+                    imgSrcObject[song.singer[0].name] || imgSrcObject['default']
+                  }
                 />
+
                 <Information>
                   <Singer>
                     {song.singer[0].name} - {song.title}

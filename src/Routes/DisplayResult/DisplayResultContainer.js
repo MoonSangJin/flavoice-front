@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DisplayResultPresenter from './DisplayResultPresenter';
 import axios from 'axios';
+import * as fs from 'fs';
 
 const DisplayResultContainer = () => {
   const pitch = localStorage.getItem('pitch');
@@ -26,11 +27,19 @@ const DisplayResultContainer = () => {
       const songs = await axios.get('https://flavoice.shop/api/v1/songs/me/');
       console.log('노래 get요청', songs);
       setSongs(songs.data);
+      checkImgExist(songs.data);
     } catch (e) {
       console.log(e);
     }
   };
 
+  const checkImgExist = (song) => {
+    console.log(song);
+    const checkExistList = song.map((item) => {
+      fs.existsSync(`../../img/${item.singer[0].name}.jpg`);
+    });
+    console.log(checkExistList);
+  };
   useEffect(() => {
     setTimeout(() => {
       pitchPost();
