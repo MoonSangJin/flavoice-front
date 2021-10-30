@@ -36,7 +36,7 @@ const DisplayResultContainer = () => {
     setTimeout(() => {
       pitchPost();
       songApi();
-    }, 50);
+    }, 1000);
   }, []);
 
   return (
