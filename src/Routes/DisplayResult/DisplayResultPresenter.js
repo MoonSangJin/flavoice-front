@@ -28,9 +28,16 @@ const DisplayResultPresenter = ({ songs }) => {
   return (
     <>
       {!songs.length && (
-        <CircularProgress
-          style={{ position: 'fixed', left: '50%', top: '40%' }}
-        />
+        <div
+          style={{
+            position: 'fixed',
+            top: '40%',
+            textAlign: 'center',
+          }}
+        >
+          <CircularProgress />
+          <Warning>해당 음역대에 해당하는 노래가 없습니다.</Warning>
+        </div>
       )}
       {songs && (
         <Swiper
@@ -100,7 +107,12 @@ const Text = styled.div`
   text-overflow: ellipsis;
   font-family: 'ImcreSoojin';
 `;
-
+const Warning = styled.div`
+  font-family: 'ImcreSoojin';
+  font-size: 1.5rem;
+  margin-top: 20px;
+  width: 100%;
+`;
 const Information = styled.div`
   width: 90%;
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
