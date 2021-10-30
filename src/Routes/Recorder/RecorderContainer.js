@@ -22,6 +22,7 @@ const RecorderContainer = () => {
   // 마이크 종료를 위한 부분.
   useEffect(() => {
     return () => {
+      window.location.reload();
       stopping.current += 5;
     };
   }, []);
