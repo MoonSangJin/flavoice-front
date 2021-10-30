@@ -23,7 +23,6 @@ const RecorderContainer = () => {
   useEffect(() => {
     return () => {
       stopping.current += 5;
-      window.location.reload();
     };
   }, []);
 
