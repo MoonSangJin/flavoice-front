@@ -109,6 +109,7 @@ const StyledButton = styled.button`
   text-decoration: none;
   font-size: 1.6rem;
   font-weight: 500;
+  cursor: pointer;
   &:hover {
     font-weight: 700;
   }

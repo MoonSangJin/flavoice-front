@@ -11,6 +11,7 @@ const RecorderContainer = () => {
   const [isReady, setIsReady] = useState(false);
   const [isStopped, setIsStopped] = useState(true);
   const [isRestarted, setIsRestarted] = useState(true);
+  const [myPitch, setMyPitch] = useState(-1);
 
   const history = useHistory();
   const mounted = useRef(false);
@@ -83,7 +84,7 @@ const RecorderContainer = () => {
           // 종료하는 시점.
           if (0 < stopping.current) {
             console.log('onaudioprocess 종료');
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < 100; i++) {
               if (
                 source.connect(processor) &&
                 processor.connect(context.destination)
@@ -93,6 +94,7 @@ const RecorderContainer = () => {
               }
             }
             setIsReady(false);
+            setMyPitch(maxPitch.current);
             stopping.current = 0;
             return;
           }
@@ -136,17 +138,19 @@ const RecorderContainer = () => {
     stopping.current += 5;
     console.log('종료 cnt', stopping.current);
     console.log('맥스', maxPitch.current);
+
     setIsRestarted(false);
     setIsStopped(true);
   };
 
   const handleSubmit = async (e) => {
-    if (maxPitch.current === -1) {
+    console.log(myPitch);
+    if (myPitch === -1) {
       alert('아직 층분히 녹음되지 않았습니다. 다시 녹음해주세요!');
       return;
     }
 
-    localStorage.setItem('pitch', maxPitch.current);
+    localStorage.setItem('pitch', myPitch);
     alert('음표 추출에 성공했습니다!');
     history.push('/displayResult');
   };

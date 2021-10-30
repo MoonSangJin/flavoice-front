@@ -50,7 +50,11 @@ const DisplayResultPresenter = ({ songs }) => {
             return (
               <SwiperSlide key={idx}>
                 <img
-                  style={{ marginBottom: '10px' }}
+                  style={{
+                    marginBottom: '10px',
+                    maxWidth: '100%',
+                    height: 'auto',
+                  }}
                   src={
                     imgSrcObject[song.singer[0].name] || imgSrcObject['default']
                   }
