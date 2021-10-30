@@ -52,8 +52,6 @@ const DisplayResultPresenter = ({ songs }) => {
                 <img
                   style={{
                     marginBottom: '10px',
-                    maxWidth: '100%',
-                    height: 'auto',
                   }}
                   src={
                     imgSrcObject[song.singer[0].name] || imgSrcObject['default']
@@ -76,6 +74,7 @@ const DisplayResultPresenter = ({ songs }) => {
       <Paper
         sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
         elevation={3}
+        style={{ zIndex: '5' }}
       >
         <BottomNavigation showLabels>
           <BottomNavigationAction
