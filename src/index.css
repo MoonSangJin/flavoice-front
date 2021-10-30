@@ -55,3 +55,8 @@ code {
   font-weight: bold;
   line-height: 20px;
 }
+
+@font-face {
+  font-family: ImcreSoojin;
+  src: url('./fonts/ImcreSoojin.woff');
+}

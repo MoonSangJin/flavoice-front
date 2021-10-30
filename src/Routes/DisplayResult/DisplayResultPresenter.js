@@ -43,11 +43,18 @@ const DisplayResultPresenter = ({ songs }) => {
           {songs.map((song, idx) => {
             return (
               <SwiperSlide key={idx}>
-                <img src={require('../../img/sample2.jpg').default} />
-                <Singer>{song.singer[0].name}</Singer>
-                <Title>{song.title}</Title>
-                <Text>노래 음역대, 한줄 설명</Text>
-                <WhiteBlank />
+                <img
+                  style={{ marginBottom: '10px' }}
+                  src={require('../../img/sample2.jpg').default}
+                />
+                <Information>
+                  <Singer>
+                    {song.singer[0].name} - {song.title}
+                  </Singer>
+
+                  <Text>{song.genre[0].name}</Text>
+                  <Text>{song.explanation}</Text>
+                </Information>
               </SwiperSlide>
             );
           })}
@@ -80,16 +87,23 @@ const DisplayResultPresenter = ({ songs }) => {
 };
 
 const Singer = styled.div`
-  font-size: 40px;
-`;
-const Title = styled.div`
-  font-size: 25px;
+  font-size: 23px;
+  font-family: 'ImcreSoojin';
 `;
 const Text = styled.div`
+  margin-top: 6px;
   font-size: 15px;
-`;
-const WhiteBlank = styled.div`
-  height: 30px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: 'ImcreSoojin';
 `;
 
+const Information = styled.div`
+  width: 90%;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  padding: 10px;
+  margin-bottom: 30px;
+`;
 export default DisplayResultPresenter;
