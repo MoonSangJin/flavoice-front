@@ -13,15 +13,12 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Paper from '@mui/material/Paper';
 
 const RecorderPresenter = ({
+  isStarted,
   onStart,
   onStop,
   handleSubmit,
-  isStarted,
   isReady,
   isStopped,
-  isStopping,
-  isComplete,
-  isRecording,
 }) => {
   const history = useHistory();
 
@@ -34,11 +31,7 @@ const RecorderPresenter = ({
       <Form style={{ alignItems: 'center' }}>
         <Padding height={64} />
         <Container>
-          <StyledButton
-            disabled={isRecording}
-            onClick={onStart}
-            style={{ marginRight: '10px' }}
-          >
+          <StyledButton onClick={onStart} style={{ marginRight: '10px' }}>
             녹음 시작
           </StyledButton>
           <StyledButton onClick={onStop}>녹음 종료</StyledButton>
@@ -69,20 +62,13 @@ const RecorderPresenter = ({
               </Box>
             </>
           )}
-          {isStarted !== 0 && isReady && !isStopping && (
+          {isStarted !== 0 && isReady && (
             <>
               <Text>목소리를 분석 중입니다.</Text>
               <Text>조용한 공간에서 해주세요! 😎</Text>
               <Text fontSize={64}>🎤</Text>
             </>
           )}
-          {isStarted !== 0 && isReady && isStopping && (
-            <>
-              <Text>종료 중입니다.</Text>
-              <Text>잠시만 기다려주세요. 😔</Text>
-            </>
-          )}
-
           {isStarted !== 0 && !isReady && isStopped && (
             <>
               <Text>녹음이 완료됐습니다.</Text>
@@ -92,11 +78,7 @@ const RecorderPresenter = ({
           <Padding height={64} />
         </Form>
 
-        <StyledButton
-          disabled={!isStopping || !isComplete}
-          onClick={handleSubmit}
-          style={{ width: '65%' }}
-        >
+        <StyledButton onClick={handleSubmit} style={{ width: '65%' }}>
           녹음한 파일보내기
         </StyledButton>
       </Form>

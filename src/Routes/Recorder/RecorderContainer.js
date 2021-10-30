@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import RecorderPresenter from './RecorderPresenter';
 
 import * as tf from '@tensorflow/tfjs';
+import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { max } from '@tensorflow/tfjs';
 
@@ -9,22 +10,21 @@ const RecorderContainer = () => {
   const [isStarted, setIsStarted] = useState(0);
   const [isReady, setIsReady] = useState(false);
   const [isStopped, setIsStopped] = useState(true);
-  const [isRecording, setIsRecording] = useState(false);
-  const [isStopping, setIsStopping] = useState(false);
-  const [isComplete, setIsComplete] = useState(false);
-
+  const [isRestarted, setIsRestarted] = useState(true);
   const [myPitch, setMyPitch] = useState(-1);
+
   const history = useHistory();
   const mounted = useRef(false);
   const maxPitch = useRef(-1);
   const stopping = useRef(0);
 
-  // 마이크 종료를 위한 부분.
+  //종료를 위한 부분.
   useEffect(() => {
     return () => {
       stopping.current += 5;
     };
   }, []);
+
 
   // 실제 max_pitch와 pitch가 일치하는지 맞추는 부분.
   useEffect(() => {
@@ -34,6 +34,7 @@ const RecorderContainer = () => {
       setIsRecording(false);
     }
   }, [isStopping]);
+
 
   // start가 증가할 때 마다 녹음이 시작된다. bool타입으로 구현이 힘들어서 int로 함.
   useEffect(() => {
@@ -92,8 +93,8 @@ const RecorderContainer = () => {
         processor.onaudioprocess = function (e) {
           // 종료하는 시점.
           if (0 < stopping.current) {
-            console.log('onaudioprocess 종료시작');
-            for (let i = 0; i < 1024; i++) {
+            console.log('onaudioprocess 종료');
+            for (let i = 0; i < 100; i++) {
               if (
                 source.connect(processor) &&
                 processor.connect(context.destination)
@@ -102,9 +103,8 @@ const RecorderContainer = () => {
                 processor.disconnect(context.destination);
               }
             }
-            console.log('onaudioprocess 종료 끝');
-            console.log('onaudioprocess의 마지막 값', maxPitch.current);
             setIsReady(false);
+            setMyPitch(maxPitch.current);
             stopping.current = 0;
             return;
           }
@@ -126,6 +126,7 @@ const RecorderContainer = () => {
             // 음표분석이 시작되는 시점에 준비 끝.
             if (pitch > maxPitch.current) {
               setIsReady(true);
+              setIsRestarted(false);
               setIsStopped(false);
               maxPitch.current = pitch;
               console.log(maxPitch.current);
@@ -140,30 +141,25 @@ const RecorderContainer = () => {
   const onStart = () => {
     setIsStarted(isStarted + 1);
     setIsStopped(false);
-    setIsStopping(false);
-    setIsComplete(false);
-    setIsRecording(true);
     stopping.current = 0;
   };
 
   const onStop = () => {
     stopping.current += 5;
-    setIsStopping(true);
     console.log('종료 cnt', stopping.current);
     console.log('맥스', maxPitch.current);
 
+    setIsRestarted(false);
     setIsStopped(true);
-    setMyPitch(maxPitch.current);
+
   };
 
   const handleSubmit = async (e) => {
-    console.log('내 음표', myPitch);
+    console.log(myPitch);
     if (myPitch === -1) {
       alert('아직 층분히 녹음되지 않았습니다. 다시 녹음해주세요!');
       return;
     }
-
-    if (myPitch !== maxPitch.current) setMyPitch(maxPitch.current);
 
     localStorage.setItem('pitch', myPitch);
     alert('음표 추출에 성공했습니다!');
@@ -179,9 +175,7 @@ const RecorderContainer = () => {
         {...{ isStarted }}
         {...{ isReady }}
         {...{ isStopped }}
-        {...{ isStopping }}
-        {...{ isComplete }}
-        {...{ isRecording }}
+        {...{ isRestarted }}
       />
     </div>
   );
