@@ -47,8 +47,8 @@ const DisplayResultPresenter = ({ songs }) => {
                   src={
                     imgSrcObject[song.singer[0].name] || imgSrcObject['default']
                   }
+                  alt="가수이미지"
                 />
-
                 <Information>
                   <Singer>
                     {song.singer[0].name} - {song.title}
