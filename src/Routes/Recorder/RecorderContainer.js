@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import RecorderPresenter from './RecorderPresenter';
 
 import * as tf from '@tensorflow/tfjs';
@@ -29,7 +29,6 @@ const RecorderContainer = () => {
   // 실제 max_pitch와 pitch가 일치하는지 맞추는 부분.
   useEffect(() => {
     if (isStopping) {
-      console.log('isStoping 반영됨.', isStopping);
       setMyPitch(maxPitch.current);
       setIsComplete(true);
       setIsRecording(false);
@@ -155,7 +154,6 @@ const RecorderContainer = () => {
 
     setIsStopped(true);
     setMyPitch(maxPitch.current);
-    console.log('종료버튼을 누르고 setIsStopping 실행', isStopping);
   };
 
   const handleSubmit = async (e) => {
