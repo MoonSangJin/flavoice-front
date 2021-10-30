@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import RecorderPresenter from './RecorderPresenter';
 
 import * as tf from '@tensorflow/tfjs';
@@ -22,9 +22,19 @@ const RecorderContainer = () => {
   useEffect(() => {
     return () => {
       stopping.current += 5;
-      window.location.reload();
     };
   }, []);
+
+
+  // 실제 max_pitch와 pitch가 일치하는지 맞추는 부분.
+  useEffect(() => {
+    if (isStopping) {
+      setMyPitch(maxPitch.current);
+      setIsComplete(true);
+      setIsRecording(false);
+    }
+  }, [isStopping]);
+
 
   // start가 증가할 때 마다 녹음이 시작된다. bool타입으로 구현이 힘들어서 int로 함.
   useEffect(() => {
@@ -141,6 +151,7 @@ const RecorderContainer = () => {
 
     setIsRestarted(false);
     setIsStopped(true);
+
   };
 
   const handleSubmit = async (e) => {
