@@ -91,7 +91,9 @@ const RecorderPresenter = ({
             </>
           )}
           <Padding height={32} />
-          {!isRecording && <Text>{userPitch || `?`}</Text>}
+          {!isRecording && (
+            <Text>현재 목소리 값 {parseInt(userPitch) || `?`}</Text>
+          )}
 
           <Padding height={32} />
         </Form>
