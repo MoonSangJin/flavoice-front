@@ -157,6 +157,12 @@ const RecorderContainer = () => {
     setMyPitch(maxPitch.current);
   };
 
+  const onStopBtn = () => {
+    for (let i = 0; i < 50; i++) {
+      onStop();
+    }
+  };
+
   const handleSubmit = async (e) => {
     console.log('내 음표', myPitch);
     if (myPitch === -1) {
@@ -175,7 +181,7 @@ const RecorderContainer = () => {
     <div>
       <RecorderPresenter
         {...{ onStart }}
-        {...{ onStop }}
+        {...{ onStopBtn }}
         {...{ handleSubmit }}
         {...{ isStarted }}
         {...{ isReady }}

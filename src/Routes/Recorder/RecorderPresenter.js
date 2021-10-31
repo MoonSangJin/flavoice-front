@@ -14,7 +14,7 @@ import Paper from '@mui/material/Paper';
 
 const RecorderPresenter = ({
   onStart,
-  onStop,
+  onStopBtn,
   handleSubmit,
   isStarted,
   isReady,
@@ -41,7 +41,7 @@ const RecorderPresenter = ({
           >
             녹음 시작
           </StyledButton>
-          <StyledButton onClick={onStop}>녹음 종료</StyledButton>
+          <StyledButton onClick={onStopBtn}>녹음 종료</StyledButton>
         </Container>
         <LinearProgress />
         <Form
