@@ -11,7 +11,7 @@ const DisplayResultContainer = () => {
       const maxPitch = await axios.post(
         'https://flavoice.shop/api/v1/voices/',
         {
-          max_pitch: String(parseInt(pitch)),
+          max_pitch: String(parseInt(pitch) + 300),
           //max_pitch: '800',
         }
       );

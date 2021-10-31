@@ -97,7 +97,7 @@ const RecorderPresenter = ({
           onClick={handleSubmit}
           style={{ width: '65%' }}
         >
-          녹음한 파일보내기
+          목소리 분석하기
         </StyledButton>
       </Form>
       <Paper

@@ -20,12 +20,7 @@ const RecorderContainer = () => {
   const stopping = useRef(0);
 
   // 마이크 종료를 위한 부분.
-  useEffect(() => {
-    return () => {
-      window.location.reload();
-      stopping.current += 5;
-    };
-  }, []);
+  useEffect(() => {}, []);
 
   // 실제 max_pitch와 pitch가 일치하는지 맞추는 부분.
   useEffect(() => {
@@ -173,8 +168,8 @@ const RecorderContainer = () => {
     if (myPitch !== maxPitch.current) setMyPitch(maxPitch.current);
 
     localStorage.setItem('pitch', myPitch);
-    alert(`음표 추출에 성공했습니다!${myPitch}`);
-    history.push('/displayResult');
+    alert(`음표 추출에 성공했습니다! my song화면에서 확인해 보세요!`);
+    window.location.reload();
   };
 
   return (
