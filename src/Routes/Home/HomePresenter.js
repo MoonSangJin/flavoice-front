@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import Form from '../../Components/Form';
-import Text from '../../Components/Text';
 import Button from '../../Components/Button';
 import Logo from '../../logo.png';
 import BottomNavigation from '@mui/material/BottomNavigation';
@@ -14,7 +13,7 @@ import SettingVoicesIcon from '@mui/icons-material/SettingsVoice';
 import Paper from '@mui/material/Paper';
 import MenuBookTwoToneIcon from '@mui/icons-material/MenuBookTwoTone';
 
-const HomePresenter = ({ loginChecker }) => {
+const HomePresenter = ({ loginChecker, userPitch }) => {
   const history = useHistory();
 
   const moveTo = (target) => {
@@ -28,7 +27,8 @@ const HomePresenter = ({ loginChecker }) => {
   return (
     <>
       <Form style={{ display: 'flex', alignItems: 'center' }}>
-        <img src={Logo} style={{ marginBottom: '30px' }} />
+        <img src={Logo} style={{ marginBottom: '30px' }} alt="Logo" />
+        <Text>당신의 최고 pitch는 : {userPitch || `?`}</Text>
         {!loginChecker && (
           <Link to="/">
             <Button content={'Sign In'} />
@@ -43,7 +43,13 @@ const HomePresenter = ({ loginChecker }) => {
         {/* <Link to="/displayComponents">
           <Button content={'Display Components'} />
         </Link> */}
-        <Button content={'Tech Stack'} />
+        <Button
+          content={'Tech Stack'}
+          onClick={() =>
+            window.open('https://github.com/justzino/flavoice', '_blank')
+          }
+        />
+
         {loginChecker && <Button content={'LogOut'} onClick={handleLogOut} />}
       </Form>
       <Paper
@@ -72,4 +78,12 @@ const HomePresenter = ({ loginChecker }) => {
   );
 };
 
+const Text = styled.div`
+  font-size: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: 'ImcreSoojin';
+  margin-bottom: 30px;
+`;
 export default HomePresenter;

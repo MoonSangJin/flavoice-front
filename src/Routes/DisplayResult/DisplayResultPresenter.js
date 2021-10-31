@@ -30,13 +30,16 @@ const DisplayResultPresenter = ({ songs }) => {
       {!songs.length && (
         <div
           style={{
+            width: '100%',
             position: 'fixed',
             top: '40%',
             textAlign: 'center',
           }}
         >
           <CircularProgress />
-          <Warning>해당 음역대에 해당하는 노래가 없습니다.</Warning>
+          <Warning>당신의 음역대를 분석 중입니다.</Warning>
+          <Warning>메인 화면에서 pitch가 확인되지 않는다면</Warning>
+          <Warning>재녹음을 진행해주세요</Warning>
         </div>
       )}
       {songs && (
@@ -113,7 +116,7 @@ const Text = styled.div`
 const Warning = styled.div`
   font-family: 'ImcreSoojin';
   font-size: 1.5rem;
-  margin-top: 20px;
+  margin-top: 30px;
   width: 100%;
 `;
 const Information = styled.div`

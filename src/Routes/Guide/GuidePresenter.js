@@ -113,15 +113,13 @@ const GuidePresenter = () => {
             }}
           >
             <span style={{ fontSize: '35px' }}>
-              <Animator animation={MoveIn(-1000, 0)}>
-                If you are ready 👍
-              </Animator>
+              <Animator>If you are ready 👍</Animator>
               <div style={{ marginBottom: '30px' }}></div>
-              <Animator animation={MoveIn(1000, 0)}>Enjoy Flavoice 🙋🏻‍♀️</Animator>
+              <Animator>Enjoy Flavoice 🙋🏻‍♀️</Animator>
               <div style={{ marginBottom: '30px' }}></div>
-              <Animator animation={MoveOut(-1000, 0)}>Thank you 💛</Animator>
+              <Animator>Thank you 💛</Animator>
               <div style={{ marginBottom: '30px' }}></div>
-              <Animator animation={MoveOut(1000, 0)}>
+              <Animator>
                 <Link to="/">
                   <Button
                     content={'GO'}
