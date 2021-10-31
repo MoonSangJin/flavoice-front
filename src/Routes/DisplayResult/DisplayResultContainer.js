@@ -12,6 +12,7 @@ const DisplayResultContainer = () => {
         'https://flavoice.shop/api/v1/voices/',
         {
           max_pitch: String(parseInt(pitch)),
+          //max_pitch: '800',
         }
       );
       console.log('피치 post요청', maxPitch);
@@ -35,7 +36,7 @@ const DisplayResultContainer = () => {
     setTimeout(() => {
       pitchPost();
       songApi();
-    }, 50);
+    }, 1000);
   }, []);
 
   return (
