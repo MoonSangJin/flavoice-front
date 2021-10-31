@@ -14,7 +14,6 @@ const RecorderContainer = () => {
   const [isComplete, setIsComplete] = useState(false);
 
   const [myPitch, setMyPitch] = useState(-1);
-  const history = useHistory();
   const mounted = useRef(false);
   const maxPitch = useRef(-1);
   const stopping = useRef(0);

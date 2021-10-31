@@ -23,6 +23,7 @@ const RecorderPresenter = ({
   isComplete,
   isRecording,
 }) => {
+  const userPitch = localStorage.getItem('pitch');
   const history = useHistory();
 
   const moveTo = (target) => {
@@ -57,7 +58,7 @@ const RecorderPresenter = ({
           <Padding height={64} />
           {isStarted === 0 && !isReady && (
             <>
-              <Text>분석할 목소리가 없습니다.</Text>
+              <Text>분석중인 목소리가 없습니다.</Text>
               <Text>목소리를 녹음해 주세요! 🤗</Text>
             </>
           )}
@@ -89,7 +90,10 @@ const RecorderPresenter = ({
               <Text>당신에게 맞는 노래는? 🤩</Text>
             </>
           )}
-          <Padding height={64} />
+          <Padding height={32} />
+          {!isRecording && <Text>{userPitch || `?`}</Text>}
+
+          <Padding height={32} />
         </Form>
 
         <StyledButton
