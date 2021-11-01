@@ -37,7 +37,7 @@ const DisplayResultPresenter = ({ songs }) => {
           }}
         >
           <CircularProgress />
-          <Warning>당신의 음역대를 분석 중입니다.</Warning>
+          <Warning>해당 음역대의 노래 정보가 아직 없습니다.</Warning>
           <Warning>메인 화면에서 pitch가 확인되지 않는다면</Warning>
           <Warning>재녹음을 진행해주세요</Warning>
         </div>
