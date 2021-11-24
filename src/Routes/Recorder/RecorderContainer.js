@@ -144,9 +144,6 @@ const RecorderContainer = () => {
   const onStop = () => {
     stopping.current += 5;
     setIsStopping(true);
-    console.log('종료 cnt', stopping.current);
-    console.log('맥스', maxPitch.current);
-
     setIsStopped(true);
     setMyPitch(maxPitch.current);
   };

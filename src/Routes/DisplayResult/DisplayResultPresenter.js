@@ -31,8 +31,7 @@ const DisplayResultPresenter = ({ songs }) => {
         <div
           style={{
             width: '100%',
-            position: 'fixed',
-            top: '40%',
+            marginTop: '50%',
             textAlign: 'center',
           }}
         >
