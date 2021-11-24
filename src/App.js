@@ -18,6 +18,7 @@ const App = () => {
         localStorage.setItem('token', refreshAccessToken);
       }
     } catch (e) {
+      alert('로그아웃 이후 다시 진행해주세요');
       console.log('refresh실패');
       console.log(e);
     }
