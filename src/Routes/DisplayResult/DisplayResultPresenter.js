@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Pagination } from 'swiper';
 import 'swiper/swiper-bundle.min.css';
 import 'swiper/swiper.min.css';
 import './styles.css';
-import { Link } from 'react-router-dom';
-import BackButton from '../../Components/BackButton';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import HomeIcon from '@mui/icons-material/Home';
@@ -30,13 +28,14 @@ const DisplayResultPresenter = ({ songs }) => {
       {!songs.length && (
         <div
           style={{
-            width: '100%',
-            marginTop: '50%',
+            width: '37.5rem',
+            position: 'fixed',
+            top: '40%',
             textAlign: 'center',
           }}
         >
           <CircularProgress />
-          <Warning>해당 음역대의 노래 정보가 아직 없습니다.</Warning>
+          <Warning>당신의 음역대를 분석 중입니다.</Warning>
           <Warning>메인 화면에서 pitch가 확인되지 않는다면</Warning>
           <Warning>재녹음을 진행해주세요</Warning>
         </div>
