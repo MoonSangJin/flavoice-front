@@ -13,10 +13,8 @@ const DisplayResultContainer = () => {
         'https://flavoice.shop/api/v1/voices/',
         {
           max_pitch: String(parseInt(pitch) + 300),
-          gender: 'F',
         }
       );
-      console.log('노래 post요청', maxPitch);
       stringPitch = maxPitch.data.max_pitch;
     } catch (e) {
       console.log(e);
@@ -29,11 +27,7 @@ const DisplayResultContainer = () => {
       const songs = await axios.get('https://flavoice.shop/api/v1/songs/me/');
       console.log('노래 get요청', songs);
 
-      const getSongs = songs.data.filter((song) => {
-        return song.max_pitch === stringPitch;
-      });
-
-      setSongs(getSongs);
+      setSongs(songs.data);
     } catch (e) {
       console.log('해당 음역대 노래 정보 없음');
       console.log(e);
